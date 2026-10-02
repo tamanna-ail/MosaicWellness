@@ -1,0 +1,171 @@
+// Continuum — normalised storage for a patient's longitudinal record.
+//
+// Every clinical fact (lab result, diagnosis, medication order, vital,
+// allergy) belongs to the Document it was extracted from, so provenance
+// is enforced by the schema. Reference ranges are stored per LabResult,
+// never per biomarker, because they differ between laboratories.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum DocumentType {
+  lab_report
+  prescription
+  consultation
+  imaging
+  discharge_summary
+  procedure
+}
+
+enum DocumentStatus {
+  uploading
+  processing
+  processed
+  needs_review
+  failed
+}
+
+model Patient {
+  id               String     @id
+  firstName        String
+  lastName         String
+  dateOfBirth      DateTime   @db.Date
+  sex              String
+  bloodGroup       String?
+  heightCm         Int?
+  city             String
+  phone            String?
+  emergencyContact String?
+  documents        Document[]
+  createdAt        DateTime   @default(now())
+}
+
+model Provider {
+  id           String     @id
+  name         String
+  kind         String // doctor | lab | hospital | clinic | imaging
+  specialty    String?
+  organization String?
+  city         String
+  facilityDocs Document[] @relation("facility")
+  clinicalDocs Document[] @relation("clinician")
+}
+
+model Condition {
+  id          String          @id
+  name        String
+  category    String
+  chronic     Boolean
+  status      String // active | resolved
+  description String?
+  diagnoses   Diagnosis[]
+  medications MedicationOrder[]
+}
+
+model Document {
+  id               String          @id
+  patientId        String
+  patient          Patient         @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  fileName         String
+  mimeType         String
+  storageKey       String? // object-storage key for the original file
+  type             DocumentType
+  title            String
+  clinicalDate     DateTime        @db.Date
+  uploadedAt       DateTime
+  providerId       String?
+  provider         Provider?       @relation("facility", fields: [providerId], references: [id])
+  clinicianId      String?
+  clinician        Provider?       @relation("clinician", fields: [clinicianId], references: [id])
+  status           DocumentStatus
+  confidence       Float
+  pages            Int             @default(1)
+  handwritten      Boolean         @default(false)
+  reviewedAt       DateTime?
+  source           String          @default("upload")
+  extractionEngine String?
+  notes            Json? // ClinicalNotes: complaint, findings, plan, impression, admission
+  labs             LabResult[]
+  diagnoses        Diagnosis[]
+  medications      MedicationOrder[]
+  vitals           VitalSign[]
+  allergies        Allergy[]
+
+  @@index([patientId, clinicalDate])
+}
+
+model LabResult {
+  id         String   @id
+  documentId String
+  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  biomarker  String
+  name       String
+  value      Float
+  unit       String
+  refLow     Float?
+  refHigh    Float?
+  refText    String?
+  edited     Boolean  @default(false)
+  sortOrder  Int      @default(0)
+
+  @@index([biomarker])
+}
+
+model Diagnosis {
+  id          String    @id
+  documentId  String
+  document    Document  @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  conditionId String
+  condition   Condition @relation(fields: [conditionId], references: [id])
+  label       String
+  certainty   String
+  sortOrder   Int       @default(0)
+}
+
+model MedicationOrder {
+  id                String     @id
+  documentId        String
+  document          Document   @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  drug              String
+  brand             String?
+  drugClass         String
+  strength          String
+  form              String?
+  frequency         String
+  instructions      String?
+  durationDays      Int?
+  action            String // started | continued | dose_changed | stopped | one_off
+  reasonConditionId String?
+  reasonCondition   Condition? @relation(fields: [reasonConditionId], references: [id])
+  reason            String?
+  edited            Boolean    @default(false)
+  sortOrder         Int        @default(0)
+
+  @@index([drug])
+}
+
+model VitalSign {
+  id         String   @id
+  documentId String
+  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  kind       String
+  value      Float
+  value2     Float?
+  unit       String
+  sortOrder  Int      @default(0)
+}
+
+model Allergy {
+  id         String   @id
+  documentId String
+  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  substance  String
+  reaction   String
+  severity   String
+}
