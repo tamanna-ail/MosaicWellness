@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { AlertTriangle, ArrowLeft, Check, Cpu, FileWarning, PencilLine, ShieldCheck, Trash2 } from "lucide-react";
+import { AlertTriangle, Check, Cpu, FileWarning, PencilLine, ShieldCheck, Trash2 } from "lucide-react";
 import { useHealth } from "@/components/providers/health-store";
 import { DocumentReplica } from "@/components/records/document-replica";
 import { ExtractedView } from "@/components/records/extracted-view";
@@ -102,13 +102,8 @@ export function RecordDetail({ id }: { id: string }) {
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between gap-4">
-        <Button variant="ghost" size="sm" className="-ml-2" onClick={() => router.back()}>
-          <ArrowLeft /> Back
-        </Button>
-        <div className="flex items-center gap-2">
-          <StatusPill status={doc.status} />
-        </div>
+      <div className="mb-4 flex justify-end">
+        <StatusPill status={doc.status} />
       </div>
 
       <div className="mb-8 flex flex-col gap-2 animate-fade-up">

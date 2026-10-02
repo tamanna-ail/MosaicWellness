@@ -2,8 +2,8 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Activity, Bell, CalendarDays, ChevronDown, FileHeart, FileText, House, Menu, Pill, RotateCcw, Settings, Sparkles, Waypoints } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Activity, ArrowLeft, Bell, CalendarDays, ChevronDown, FileHeart, FileText, House, Menu, Pill, RotateCcw, Settings, Sparkles, Waypoints } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useHealth, useSnapshot } from "@/components/providers/health-store";
 import { Sheet } from "@/components/ui/overlay";
@@ -193,6 +193,43 @@ function ProfileMenu() {
   );
 }
 
+/** Where "back" goes when there is no earlier screen in this visit (e.g. a link opened directly). */
+function parentOf(pathname: string) {
+  const m = pathname.match(/^\/(records|health)\/.+/);
+  return m ? `/${m[1]}` : "/";
+}
+
+/**
+ * Remembers the screens visited in this session so the back button can
+ * return to the previous one. Revisiting the second-to-last screen is
+ * treated as going back (covers both this button and the browser's).
+ */
+function useVisitTrail(pathname: string) {
+  const [trail, setTrail] = React.useState<string[]>([pathname]);
+  if (trail[trail.length - 1] !== pathname) {
+    setTrail((t) => (t.length > 1 && t[t.length - 2] === pathname ? t.slice(0, -1) : [...t, pathname]));
+  }
+  return trail;
+}
+
+function BackButton() {
+  const pathname = usePathname();
+  const router = useRouter();
+  const trail = useVisitTrail(pathname);
+  const hasHistory = trail.length > 1;
+  if (!hasHistory && pathname === "/") return null;
+  return (
+    <button
+      onClick={() => (hasHistory ? router.back() : router.push(parentOf(pathname)))}
+      className="flex h-10 shrink-0 items-center gap-1.5 rounded-xl border border-line bg-surface pl-2.5 pr-3 text-[14px] font-medium text-ink-2 shadow-card transition-colors hover:border-accent/40 hover:text-ink"
+      aria-label="Go back"
+    >
+      <ArrowLeft className="size-[18px]" strokeWidth={1.9} />
+      <span className="hidden sm:inline">Back</span>
+    </button>
+  );
+}
+
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = React.useState(false);
   const pathname = usePathname();
@@ -218,6 +255,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 <Wordmark />
               </span>
             </Link>
+            <BackButton />
             <div className="hidden min-w-0 flex-1 md:block md:max-w-[790px]">
               <GlobalSearch variant="bar" />
             </div>

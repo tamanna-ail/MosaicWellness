@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { ArrowLeft, Info, Pill, Sparkles, TriangleAlert } from "lucide-react";
+import { Info, Pill, Sparkles, TriangleAlert } from "lucide-react";
 import { useSnapshot } from "@/components/providers/health-store";
 import { ChangeChip, FlagBadge, SectionLabel } from "@/components/health/bits";
 import { TrendChart } from "@/components/health/trend-chart";
@@ -28,12 +28,6 @@ export function BiomarkerDetail({ code }: { code: string }) {
 
   return (
     <div>
-      <Button asChild variant="ghost" size="sm" className="-ml-2 mb-6">
-        <Link href="/health">
-          <ArrowLeft /> Health Data
-        </Link>
-      </Button>
-
       <div className="mb-8 animate-fade-up">
         <div className="text-[11.5px] font-medium uppercase tracking-[0.32em] text-ink-3">{def.group}</div>
         <h1 className="mt-2 font-serif text-[52px] font-semibold leading-none text-ink">{def.shortName}</h1>

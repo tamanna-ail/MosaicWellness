@@ -6,8 +6,8 @@
  */
 import * as React from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
-import { ArrowLeft, Printer } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { Printer } from "lucide-react";
 import { useSnapshot } from "@/components/providers/health-store";
 import { Logo } from "@/components/shell/logo";
 import { Button } from "@/components/ui/primitives";
@@ -70,7 +70,6 @@ export default function SummaryPage() {
 
 function Summary() {
   const s = useSnapshot();
-  const router = useRouter();
   const params = useSearchParams();
   const range = params.get("range") ?? "all";
   const { from, to } = rangeBounds(range, params.get("from"), params.get("to"));
@@ -106,10 +105,7 @@ function Summary() {
 
   return (
     <div>
-      <div className="no-print mb-6 flex items-center justify-between">
-        <Button variant="ghost" size="sm" className="-ml-2" onClick={() => router.back()}>
-          <ArrowLeft /> Back
-        </Button>
+      <div className="no-print mb-6 flex items-center justify-end">
         <div className="flex items-center gap-2">
           <span className="text-[12.5px] text-ink-3">{RANGE_LABEL[range] ?? "Entire history"}</span>
           {process.env.NEXT_PUBLIC_HOST !== "artifact" && (
