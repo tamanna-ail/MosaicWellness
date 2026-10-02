@@ -32,7 +32,7 @@ export default function SettingsPage() {
 
   return (
     <div className="max-w-3xl">
-      <PageHeader title="Profile & Settings" subtitle="Your details, your data, and how Continuum processes it." />
+      <PageHeader eyebrow="Your account" title="Profile & Settings" subtitle="Your details, your data, and how healthly processes it." />
       <div className="space-y-6">
         <Card>
           <CardHeader title="Profile" />
@@ -55,7 +55,7 @@ export default function SettingsPage() {
         </Card>
 
         <Card>
-          <CardHeader title="Processing services" description="Continuum works fully offline-capable; connected services improve extraction and answers." />
+          <CardHeader title="Processing services" description="healthly works without any connected service; connecting them improves extraction and answers." />
           <div className="divide-y divide-line-2 px-5 pb-2">
             <div className="flex items-center gap-4 py-3.5">
               <Sparkles className="size-4 text-accent" />

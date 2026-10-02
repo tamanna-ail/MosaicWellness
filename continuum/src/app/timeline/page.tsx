@@ -1,10 +1,10 @@
 "use client";
 
 import * as React from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronRight } from "lucide-react";
 import { useSnapshot } from "@/components/providers/health-store";
 import { DocumentDrawer } from "@/components/records/document-drawer";
-import { DocTypeIcon } from "@/components/health/bits";
+import { DocTile } from "@/components/ui/icon-tile";
 import { PageHeader, Segmented } from "@/components/ui/primitives";
 import { formatValue, getBiomarker } from "@/lib/health/biomarkers";
 import { displayDrug } from "@/lib/health/describe";
@@ -116,9 +116,9 @@ export default function TimelinePage() {
 
   return (
     <div>
-      <PageHeader title="Your Health Timeline" subtitle="Your medical history, organized chronologically." />
+      <PageHeader eyebrow="Your history" title="Your Health Timeline" subtitle="Your medical history, organized chronologically." />
 
-      <div className="sticky top-14 z-20 -mx-4 mb-8 border-b border-line-2 bg-bg/90 px-4 py-3 backdrop-blur lg:top-0 sm:-mx-8 sm:px-8 lg:-mx-12 lg:px-12">
+      <div className="sticky top-[136px] z-20 -mx-4 mb-8 bg-bg/90 px-4 py-3 backdrop-blur md:top-[76px] sm:-mx-8 sm:px-8 lg:-mx-10 lg:px-10">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <Segmented options={FILTERS.map((f) => ({ ...f, count: counts[f.value] }))} value={filter} onChange={setFilter} size="sm" />
           <div className="flex items-center gap-1 text-[13px]">
@@ -143,51 +143,51 @@ export default function TimelinePage() {
           return (
             <section key={y} data-year={y} ref={(el) => void (yearRefs.current[y] = el)} className="scroll-mt-36 pb-6">
               <div className="mb-4 flex items-center gap-4">
-                <h2 className="font-serif text-[30px] leading-none text-ink">{y}</h2>
+                <h2 className="font-serif text-[34px] font-semibold leading-none text-ink">{y}</h2>
                 <div className="h-px flex-1 bg-line" />
-                <span className="text-[12px] text-ink-3 tabular">{inYear.length} events</span>
+                <span className="text-[12.5px] text-ink-3 tabular">{inYear.length} events</span>
               </div>
-              <ol className="relative">
-                <span aria-hidden className="absolute bottom-3 left-[95.5px] top-3 w-px bg-line sm:left-[118.5px]" />
-                {inYear.map((d) => {
+              <ol className="relative rounded-[20px] border border-line-2 bg-surface px-3 py-2 shadow-card sm:px-6">
+                {inYear.map((d, i) => {
                   const cat = TIMELINE_CATEGORY[d.type];
                   const st = CATEGORY_STYLE[cat];
                   const who = documentSourceName(s, d);
                   const facility = getProvider(s, d.providerId);
+                  const single = d.type === "prescription" && d.extracted.medications?.length === 1 ? d.extracted.medications[0] : undefined;
                   return (
-                    <li key={d.id} className="group relative grid grid-cols-[72px_24px_1fr] gap-x-3 py-2 sm:grid-cols-[92px_30px_1fr]">
-                      <div className="pt-3.5 text-right">
-                        <div className="text-[12px] font-semibold tracking-[0.04em] text-ink tabular">{fmtDate(d.clinicalDate, "dayMonth")}</div>
+                    <li key={d.id} className="group relative grid grid-cols-[58px_20px_1fr] gap-x-2 sm:grid-cols-[76px_24px_1fr] sm:gap-x-3">
+                      <div className="pt-[26px] text-right">
+                        <div className="text-[12.5px] font-semibold tracking-[0.04em] text-ink tabular">{fmtDate(d.clinicalDate, "dayMonth")}</div>
                       </div>
-                      <div className="relative flex justify-center pt-[18px]">
-                        <span className={cn("relative z-10 size-2.5 rounded-full ring-4 ring-bg transition-transform group-hover:scale-125", st.dot)} />
+                      <div className="relative flex justify-center">
+                        <span aria-hidden className={cn("absolute w-px bg-line", i === 0 ? "top-8" : "top-0", i === inYear.length - 1 ? "h-8" : "bottom-0")} />
+                        <span className={cn("relative z-10 mt-[29px] size-2.5 rounded-full ring-4 ring-surface transition-transform group-hover:scale-125", st.dot)} />
                       </div>
-                      <button
-                        onClick={() => setDrawer(d.id)}
-                        className="w-full rounded-2xl border border-transparent px-4 py-3 text-left transition-all hover:border-line hover:bg-surface hover:shadow-card"
-                      >
-                        <div className="flex items-center gap-2">
-                          <span className={cn("text-[11px] font-semibold uppercase tracking-[0.1em]", st.text)}>{TIMELINE_LABEL[cat]}</span>
-                          {d.status === "needs_review" && <span className="rounded bg-high-soft px-1.5 text-[10.5px] font-medium text-high">Needs review</span>}
-                        </div>
-                        <div className="mt-1 flex items-center gap-2">
-                          <h3 className="text-[16px] font-semibold tracking-[-0.01em] text-ink">{d.type === "prescription" && d.extracted.medications?.length === 1 ? `${displayDrug(d.extracted.medications[0].drug)} ${d.extracted.medications[0].strength}` : d.title}</h3>
-                        </div>
-                        <div className="text-[13px] text-ink-3">
-                          {who}
-                          {facility && facility.name !== who && getProvider(s, d.clinicianId)?.organization !== facility.name ? ` · ${facility.name}` : ""}
-                        </div>
-                        {!(d.type === "prescription" && d.extracted.medications?.length === 1) ? (
-                          <EventBody d={d} />
-                        ) : (
-                          <div className="mt-1.5 text-[13.5px] text-ink-2">
-                            {[d.extracted.medications[0].frequency, d.extracted.medications[0].instructions].filter(Boolean).join(" · ")}
-                            {d.extracted.medications[0].action === "dose_changed" && <span className="ml-1.5 rounded bg-high-soft px-1 text-[11px] text-high">dose changed</span>}
-                          </div>
-                        )}
-                        <div className="mt-2.5 inline-flex items-center gap-1 text-[12.5px] font-medium text-ink-3 transition-colors group-hover:text-accent">
-                          <DocTypeIcon type={d.type} className="size-3.5" /> {VIEW_LABEL[cat]} <ArrowRight className="size-3.5" />
-                        </div>
+                      <button onClick={() => setDrawer(d.id)} className={cn("flex w-full min-w-0 gap-4 py-5 text-left", i < inYear.length - 1 && "border-b border-line-2")}>
+                        <DocTile type={d.type} className="mt-0.5" />
+                        <span className="min-w-0 flex-1">
+                          <span className="flex items-center gap-2">
+                            <span className={cn("text-[11px] font-semibold uppercase tracking-[0.14em]", st.text)}>{TIMELINE_LABEL[cat]}</span>
+                            {d.status === "needs_review" && <span className="rounded bg-high-soft px-1.5 text-[10.5px] font-medium text-high">Needs review</span>}
+                          </span>
+                          <span className="mt-1 block text-[16px] font-medium tracking-[-0.01em] text-ink">{single ? `${displayDrug(single.drug)} ${single.strength}` : d.title}</span>
+                          <span className="block text-[13.5px] text-ink-3">
+                            {who}
+                            {facility && facility.name !== who && getProvider(s, d.clinicianId)?.organization !== facility.name ? ` · ${facility.name}` : ""}
+                          </span>
+                          {!single ? (
+                            <EventBody d={d} />
+                          ) : (
+                            <span className="mt-1.5 block text-[13.5px] text-ink-2">
+                              {[single.frequency, single.instructions].filter(Boolean).join(" · ")}
+                              {single.action === "dose_changed" && <span className="ml-1.5 rounded bg-high-soft px-1 text-[11px] text-high">dose changed</span>}
+                            </span>
+                          )}
+                          <span className="mt-2.5 inline-flex items-center gap-1 text-[13px] font-medium text-ink-3 transition-colors group-hover:text-accent">
+                            {VIEW_LABEL[cat]} <ArrowRight className="size-3.5" />
+                          </span>
+                        </span>
+                        <ChevronRight className="mt-3 size-4 shrink-0 text-ink-3 transition-transform group-hover:translate-x-0.5" />
                       </button>
                     </li>
                   );

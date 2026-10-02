@@ -99,10 +99,11 @@ function Ask() {
     <div className="mx-auto flex min-h-[calc(100vh-8rem)] max-w-[820px] flex-col">
       {empty ? (
         <div className="flex flex-1 flex-col justify-center pb-10 pt-6 animate-fade-up">
-          <div className="mb-6 flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br from-accent to-accent-ink text-on-accent shadow-[0_8px_24px_-8px_rgba(61,92,224,0.6)]">
-            <Sparkles className="size-6" />
+          <div className="mb-6 flex size-14 items-center justify-center rounded-2xl bg-t-green-bg text-t-green">
+            <Sparkles className="size-6" strokeWidth={1.75} />
           </div>
-          <h1 className="font-serif text-[42px] leading-[1.05] text-ink sm:text-[52px]">Ask your health history</h1>
+          <div className="mb-3 text-[11.5px] font-medium uppercase tracking-[0.32em] text-ink-3">Your AI companion</div>
+          <h1 className="font-serif text-[46px] font-semibold leading-[1.02] text-ink sm:text-[58px]">Ask your health history</h1>
           <p className="mt-3 text-[16px] text-ink-2">Ask questions across all your medical records.</p>
           <div className="mt-2 flex items-center gap-1.5 text-[12.5px] text-ink-3">
             <ShieldCheck className="size-3.5 text-ok" /> Answers use only your {usable} confirmed records, and every claim links to its source.
@@ -197,7 +198,7 @@ function Ask() {
             <ArrowUp className="size-4" />
           </button>
         </form>
-        <p className="mt-2 text-center text-[11.5px] text-ink-3">Continuum organises and explains your records. It isn’t a doctor and doesn’t give medical advice.</p>
+        <p className="mt-2 text-center text-[11.5px] text-ink-3">healthly organises and explains your records. It isn’t a doctor and doesn’t give medical advice.</p>
       </div>
       <DocumentDrawer documentId={drawer} onClose={() => setDrawer(null)} />
     </div>

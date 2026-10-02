@@ -1,6 +1,6 @@
 # MosaicWellness: Builder Round builds
 
-- **[`continuum/`](continuum/README.md): Continuum**, a longitudinal personal medical-records app (DigiLocker for health records + an AI companion that answers from them). Next.js + TypeScript + Prisma. **This is the current submission.**
+- **[`continuum/`](continuum/README.md): healthly**, a longitudinal personal medical-records app (DigiLocker for health records + an AI companion that answers from them). Next.js + TypeScript + Prisma. **This is the current submission.**
 - `index.html`: **Tamanna**, an earlier habit-garden prototype (described below).
 
 ---

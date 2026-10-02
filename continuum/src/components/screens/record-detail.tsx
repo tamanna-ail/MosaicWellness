@@ -9,6 +9,7 @@ import { DocumentReplica } from "@/components/records/document-replica";
 import { ExtractedView } from "@/components/records/extracted-view";
 import { StatusPill } from "@/components/records/status-pill";
 import { ConfidenceMeter, DocTypeIcon, FileGlyph, FlagBadge, SectionLabel } from "@/components/health/bits";
+import { DocTile } from "@/components/ui/icon-tile";
 import { Button, EmptyState, Input } from "@/components/ui/primitives";
 import { getBiomarker } from "@/lib/health/biomarkers";
 import { DOC_TYPE_LABEL, documentFacilityName, flagFor, fmtDate, getDocument, getProvider } from "@/lib/health/selectors";
@@ -115,7 +116,7 @@ export function RecordDetail({ id }: { id: string }) {
           <FileGlyph mimeType={doc.mimeType} className="size-3.5" />
           {doc.fileName}
         </div>
-        <h1 className="font-serif text-[36px] leading-tight text-ink">{doc.title}</h1>
+        <div className="flex items-center gap-4"><DocTile type={doc.type} size="lg" /><h1 className="font-serif text-[44px] font-semibold leading-tight text-ink">{doc.title}</h1></div>
         <div className="text-[14px] text-ink-2">
           {fmtDate(doc.clinicalDate, "long")} · {getProvider(s, doc.clinicianId)?.name ?? documentFacilityName(s, doc)}
         </div>
@@ -141,7 +142,7 @@ export function RecordDetail({ id }: { id: string }) {
             )}
           </div>
 
-          <div className="rounded-2xl border border-line bg-surface shadow-card">
+          <div className="rounded-[20px] border border-line-2 bg-surface shadow-card">
             {/* Trust strip */}
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-b border-line-2 px-5 py-3.5">
               <span className="flex items-center gap-2 text-[12.5px] text-ink-3">

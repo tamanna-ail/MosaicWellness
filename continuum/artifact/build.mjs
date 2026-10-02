@@ -37,16 +37,16 @@ execFileSync(path.join(root, "node_modules/.bin/tailwindcss"), ["-i", path.join(
 const js = readFileSync(path.join(tmp, "app.js"), "utf8").replace(/<\/script/gi, "<\\/script");
 const css = readFileSync(path.join(tmp, "app.css"), "utf8");
 
-const html = `<title>Continuum</title>
+const html = `<title>healthly</title>
 <meta name="description" content="Your lifelong medical record, organised, with an AI companion that answers from your own documents.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Geist+Mono:wght@400;500&family=Geist:wght@300..700&family=Instrument+Serif&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Geist+Mono:wght@400;500&family=Geist:wght@300..700&display=swap">
 <style>
 :root {
   --font-geist-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-geist-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  --font-serif-display: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --font-serif-display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
   --font-hand: "Caveat", "Segoe Script", cursive;
 }
 ${css}

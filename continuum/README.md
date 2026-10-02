@@ -1,8 +1,10 @@
-# Continuum
+# healthly
+
+*(project folder: `continuum/`)*
 
 **DigiLocker for your medical records, with an AI companion that answers from them.**
 
-Continuum turns years of scattered prescriptions, lab reports, scans and discharge summaries into one longitudinal health record you can search, chart and question. Every number and every AI answer links back to the document it came from.
+healthly turns years of scattered prescriptions, lab reports, scans and discharge summaries into one longitudinal health record you can search, chart and question. Every number and every AI answer links back to the document it came from.
 
 > Medical documents → structured health data → longitudinal timeline → retrieval & analysis
 
@@ -113,4 +115,4 @@ Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · shadcn/u
 
 ---
 
-Continuum organises and explains records. It is not a doctor and does not give medical advice.
+healthly organises and explains records. It is not a doctor and does not give medical advice.

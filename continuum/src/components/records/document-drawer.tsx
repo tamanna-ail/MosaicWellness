@@ -5,7 +5,8 @@ import { ArrowRight, CalendarDays, MapPin, UserRound } from "lucide-react";
 import { useSnapshot } from "@/components/providers/health-store";
 import { Sheet } from "@/components/ui/overlay";
 import { Button } from "@/components/ui/primitives";
-import { DocTypeIcon, FileGlyph } from "@/components/health/bits";
+import { FileGlyph } from "@/components/health/bits";
+import { DocTile } from "@/components/ui/icon-tile";
 import { DOC_TYPE_LABEL, documentFacilityName, fmtDate, getDocument, getProvider } from "@/lib/health/selectors";
 import { ExtractedView } from "./extracted-view";
 
@@ -20,13 +21,11 @@ export function DocumentDrawer({ documentId, onClose }: { documentId: string | n
       {doc && (
         <>
           <div className="border-b border-line-2 px-6 pb-5 pt-6">
-            <div className="flex items-center gap-2 text-[12px] font-medium text-ink-3">
-              <span className="flex size-6 items-center justify-center rounded-md bg-sunken text-ink-2">
-                <DocTypeIcon type={doc.type} className="size-3.5" />
-              </span>
+            <div className="flex items-center gap-3 text-[12.5px] font-medium text-ink-3">
+              <DocTile type={doc.type} size="sm" />
               {DOC_TYPE_LABEL[doc.type]}
             </div>
-            <h2 className="mt-3 pr-8 font-serif text-[28px] leading-tight text-ink">{doc.title}</h2>
+            <h2 className="mt-3 pr-8 font-serif text-[32px] font-semibold leading-tight text-ink">{doc.title}</h2>
             <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-[13px] text-ink-2">
               <span className="inline-flex items-center gap-1.5">
                 <CalendarDays className="size-3.5 text-ink-3" />

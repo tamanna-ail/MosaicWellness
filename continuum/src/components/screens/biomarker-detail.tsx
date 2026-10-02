@@ -35,8 +35,8 @@ export function BiomarkerDetail({ code }: { code: string }) {
       </Button>
 
       <div className="mb-8 animate-fade-up">
-        <div className="text-[12px] font-medium uppercase tracking-[0.08em] text-ink-3">{def.group}</div>
-        <h1 className="mt-1 font-serif text-[44px] leading-none text-ink">{def.shortName}</h1>
+        <div className="text-[11.5px] font-medium uppercase tracking-[0.32em] text-ink-3">{def.group}</div>
+        <h1 className="mt-2 font-serif text-[52px] font-semibold leading-none text-ink">{def.shortName}</h1>
         <p className="mt-2 max-w-xl text-[14px] text-ink-2">
           {def.name}. {def.description}
         </p>
@@ -141,7 +141,7 @@ export function BiomarkerDetail({ code }: { code: string }) {
             <Sparkles className="size-3.5" /> Ask about this trend
           </Link>
         </div>
-        <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-card">
+        <div className="overflow-hidden rounded-[20px] border border-line-2 bg-surface shadow-card">
           <table className="w-full text-[13.5px]">
             <thead>
               <tr className="border-b border-line-2 bg-surface-2 text-left text-[11px] uppercase tracking-[0.07em] text-ink-3">

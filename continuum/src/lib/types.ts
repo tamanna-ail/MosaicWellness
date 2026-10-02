@@ -147,9 +147,22 @@ export interface Condition {
   description?: string;
 }
 
+/** A planned visit or test, traced to the note that asked for it. */
+export interface Appointment {
+  id: string;
+  date: string; // ISO date
+  title: string;
+  kind: "consultation" | "test";
+  clinicianId?: string;
+  providerId?: string;
+  note?: string;
+  sourceDocumentId?: string;
+}
+
 export interface HealthSnapshot {
   patient: Patient;
   providers: Provider[];
   conditions: Condition[];
   documents: MedicalDocument[];
+  appointments?: Appointment[];
 }

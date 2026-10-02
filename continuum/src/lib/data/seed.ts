@@ -12,6 +12,7 @@
  */
 import type {
   AllergyEntry,
+  Appointment,
   ClinicalNotes,
   Condition,
   DiagnosisEntry,
@@ -532,4 +533,9 @@ export const documents: MedicalDocument[] = [
   }),
 ];
 
-export const seedSnapshot: HealthSnapshot = { patient, providers, conditions, documents };
+export const appointments: Appointment[] = [
+  { id: "apt_endo_oct26", date: "2026-10-14", title: "Endocrinology Follow-up", kind: "consultation", clinicianId: "dr_mehta", providerId: "mehta_endo", note: "Review September thyroid profile on levothyroxine 50 mcg.", sourceDocumentId: "doc_2026_08_04_consult" },
+  { id: "apt_labs_dec26", date: "2026-12-12", title: "Vitamin D & Lipid Recheck", kind: "test", clinicianId: "dr_iyer", providerId: "apollo_diag", note: "Periodic checks on weekly vitamin D3 and atorvastatin.", sourceDocumentId: "doc_2026_03_10_consult" },
+];
+
+export const seedSnapshot: HealthSnapshot = { patient, providers, conditions, documents, appointments };

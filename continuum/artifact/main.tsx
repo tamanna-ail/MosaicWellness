@@ -72,7 +72,7 @@ function App() {
       {(loc) => (
         <HealthProvider initial={initial}>
           <UploadProvider>
-            <AppShell dataSource="demo">
+            <AppShell>
               <Screen key={`${loc.pathname}?${loc.search}`} pathname={loc.pathname} />
             </AppShell>
           </UploadProvider>

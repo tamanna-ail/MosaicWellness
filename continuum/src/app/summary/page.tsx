@@ -124,7 +124,7 @@ function Summary() {
         <header className="flex items-start justify-between gap-6 border-b-2 border-ink pb-6">
           <div>
             <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-3">Patient medical summary</div>
-            <h1 className="mt-2 font-serif text-[38px] leading-none">
+            <h1 className="mt-2 font-serif text-[44px] font-semibold leading-none">
               {p.firstName} {p.lastName}
             </h1>
             <div className="mt-2 text-[13px] text-ink-2">
@@ -133,7 +133,7 @@ function Summary() {
             </div>
           </div>
           <div className="flex items-center gap-2 text-[12px] text-ink-3">
-            <Logo className="size-6" /> Continuum
+            <Logo className="size-6" /> healthly
           </div>
         </header>
 
@@ -353,7 +353,7 @@ function Summary() {
           })}
         </ol>
         <p className="mt-8 border-t border-line pt-4 text-[11.5px] leading-relaxed text-ink-3">
-          Compiled by Continuum from {docs.length} patient-held records ({docsInRange.length} in this period). Information is transcribed from source documents and reviewed by the patient; it is not a clinical assessment. Please refer to the cited originals for clinical decisions.
+          Compiled by healthly from {docs.length} patient-held records ({docsInRange.length} in this period). Information is transcribed from source documents and reviewed by the patient; it is not a clinical assessment. Please refer to the cited originals for clinical decisions.
         </p>
       </article>
     </div>

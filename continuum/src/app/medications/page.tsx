@@ -2,7 +2,8 @@
 
 import * as React from "react";
 import { useSearchParams } from "next/navigation";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Pill } from "lucide-react";
+import { IconTile, medTone } from "@/components/ui/icon-tile";
 import { useSnapshot } from "@/components/providers/health-store";
 import { SectionLabel } from "@/components/health/bits";
 import { DocumentDrawer } from "@/components/records/document-drawer";
@@ -32,7 +33,7 @@ function Medications() {
 
   return (
     <div>
-      <PageHeader title="Medications" subtitle="What you take now, and how it has changed over time." />
+      <PageHeader eyebrow="Your treatment" title="Medications" subtitle="What you take now, and how it has changed over time." />
       <Segmented
         options={[
           { value: "current", label: "Current", count: active.length },
@@ -59,13 +60,18 @@ function Current({ s, courses, open }: { s: HealthSnapshot; courses: MedicationC
         return (
           <Card key={c.key} className="flex flex-col p-6">
             <div className="flex items-start justify-between gap-3">
-              <div>
-                <h3 className="text-[19px] font-semibold tracking-[-0.015em] text-ink">{displayDrug(cur.drug)}</h3>
-                <div className="text-[12.5px] capitalize text-ink-3">{cur.drugClass}</div>
+              <div className="flex items-center gap-3.5">
+                <IconTile tone={medTone(cur.drugClass)} size="lg">
+                  <Pill strokeWidth={1.75} />
+                </IconTile>
+                <div>
+                  <h3 className="text-[18px] font-medium tracking-[-0.01em] text-ink">{displayDrug(cur.drug)}</h3>
+                  <div className="text-[12.5px] capitalize text-ink-3">{cur.drugClass}</div>
+                </div>
               </div>
               <Badge tone="ok">Active</Badge>
             </div>
-            <div className="mt-5 text-[30px] font-semibold leading-none tracking-[-0.02em] tabular text-ink">{cur.strength}</div>
+            <div className="mt-6 font-serif text-[40px] font-semibold leading-none tabular text-ink">{cur.strength}</div>
             <div className="mt-2 text-[14px] text-ink-2">{cur.frequency}</div>
             {cur.instructions && <div className="text-[13.5px] text-ink-3">{cur.instructions}</div>}
 
@@ -250,7 +256,7 @@ function History({ s, courses, open }: { s: HealthSnapshot; courses: MedicationC
       {/* Short courses */}
       <section>
         <SectionLabel className="mb-3">Short courses</SectionLabel>
-        <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-card">
+        <div className="overflow-hidden rounded-[20px] border border-line-2 bg-surface shadow-card">
           <table className="w-full text-[13.5px]">
             <thead>
               <tr className="border-b border-line-2 bg-surface-2 text-left text-[11px] uppercase tracking-[0.07em] text-ink-3">

@@ -5,7 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowDownUp, Plus, Search } from "lucide-react";
 import { useSnapshot } from "@/components/providers/health-store";
 import { UploadJobs, UploadZone } from "@/components/records/upload-zone";
-import { DocTypeIcon, FileGlyph } from "@/components/health/bits";
+import { DocTypeIcon } from "@/components/health/bits";
+import { DocTile } from "@/components/ui/icon-tile";
 import { Button, EmptyState, Input, PageHeader, Segmented } from "@/components/ui/primitives";
 import { StatusPill } from "@/components/records/status-pill";
 import { DOC_TYPE_LABEL, documentFacilityName, documentSourceName, fmtDate, searchRecords } from "@/lib/health/selectors";
@@ -37,7 +38,7 @@ function Records() {
   const [filter, setFilter] = React.useState<Filter>(params.get("status") === "review" ? "review" : "all");
   const [sort, setSort] = React.useState<Sort>("newest");
   const [q, setQ] = React.useState("");
-  const [showUpload, setShowUpload] = React.useState(false);
+  const [showUpload, setShowUpload] = React.useState(params.get("upload") === "1");
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const matches = (d: MedicalDocument) => (filter === "all" ? true : filter === "review" ? d.status === "needs_review" : FILTER_TYPES[filter].includes(d.type));
@@ -62,6 +63,7 @@ function Records() {
   return (
     <div>
       <PageHeader
+        eyebrow="Your vault"
         title="Medical Records"
         subtitle="All your health documents in one place."
         actions={
@@ -117,7 +119,7 @@ function Records() {
         </div>
       </div>
 
-      <div className="mt-4 overflow-hidden rounded-2xl border border-line bg-surface shadow-card">
+      <div className="mt-4 overflow-hidden rounded-[20px] border border-line-2 bg-surface shadow-card">
         <div className="hidden grid-cols-[minmax(0,2.2fr)_minmax(0,1fr)_minmax(0,0.9fr)_minmax(0,1.4fr)_110px] gap-4 border-b border-line-2 bg-surface-2 px-5 py-2.5 text-[11px] font-medium uppercase tracking-[0.07em] text-ink-3 md:grid">
           <div>Document Name</div>
           <div>Type</div>
@@ -132,9 +134,7 @@ function Records() {
             className="grid w-full grid-cols-[1fr_auto] gap-x-4 gap-y-1 border-b border-line-2 px-5 py-3.5 text-left transition-colors last:border-b-0 hover:bg-surface-2 md:grid-cols-[minmax(0,2.2fr)_minmax(0,1fr)_minmax(0,0.9fr)_minmax(0,1.4fr)_110px] md:items-center"
           >
             <div className="flex min-w-0 items-center gap-3">
-              <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-line-2 bg-surface-2 text-ink-3">
-                <FileGlyph mimeType={d.mimeType} />
-              </div>
+              <DocTile type={d.type} />
               <div className="min-w-0">
                 <div className="truncate text-[14px] font-medium text-ink">{d.fileName}</div>
                 <div className="truncate text-[12px] text-ink-3">

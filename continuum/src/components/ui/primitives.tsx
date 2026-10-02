@@ -1,5 +1,5 @@
 /**
- * shadcn/ui-style primitives, adapted to Continuum's tokens.
+ * shadcn/ui-style primitives, adapted to healthly's tokens.
  * (The shadcn registry is copy-in source by design; these are that source,
  * trimmed to what the product uses.)
  */
@@ -11,11 +11,11 @@ import { cn } from "@/lib/utils";
 // ---------- Button ----------
 
 export const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-[background,color,box-shadow,transform] duration-150 disabled:pointer-events-none disabled:opacity-50 active:translate-y-px [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-[background,color,box-shadow,transform] duration-150 disabled:pointer-events-none disabled:opacity-50 active:translate-y-px [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        primary: "bg-ink text-on-ink hover:bg-ink/88 shadow-[0_1px_0_rgb(255_255_255/0.12)_inset,0_1px_2px_rgb(0_0_0/0.12)]",
+        primary: "bg-accent text-on-accent hover:bg-accent-ink shadow-[0_1px_0_rgb(255_255_255/0.14)_inset,0_1px_2px_rgb(0_0_0/0.10)]",
         accent: "bg-accent text-on-accent hover:bg-accent-ink",
         secondary: "bg-surface text-ink border border-line hover:bg-surface-2 hover:border-ink-4/60 shadow-card",
         ghost: "text-ink-2 hover:bg-sunken hover:text-ink",
@@ -46,14 +46,14 @@ Button.displayName = "Button";
 // ---------- Card ----------
 
 export function Card({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("rounded-2xl border border-line bg-surface shadow-card", className)} {...props} />;
+  return <div className={cn("rounded-[20px] border border-line-2 bg-surface shadow-card", className)} {...props} />;
 }
 
 export function CardHeader({ title, description, action, className }: { title: React.ReactNode; description?: React.ReactNode; action?: React.ReactNode; className?: string }) {
   return (
-    <div className={cn("flex items-start justify-between gap-4 px-5 pt-5 pb-3", className)}>
+    <div className={cn("flex items-start justify-between gap-4 px-6 pt-6 pb-3", className)}>
       <div className="min-w-0">
-        <h2 className="text-[15px] font-semibold tracking-[-0.01em] text-ink">{title}</h2>
+        <h2 className="text-[17px] font-medium tracking-[-0.01em] text-ink">{title}</h2>
         {description && <p className="mt-0.5 text-[13px] text-ink-3">{description}</p>}
       </div>
       {action}
@@ -112,7 +112,7 @@ export function Segmented<T extends string>({
   size?: "sm" | "md";
 }) {
   return (
-    <div role="tablist" className={cn("inline-flex max-w-full items-center gap-0.5 overflow-x-auto rounded-xl bg-sunken p-1", className)}>
+    <div role="tablist" className={cn("inline-flex max-w-full items-center gap-1 overflow-x-auto rounded-xl", className)}>
       {options.map((o) => (
         <button
           key={o.value}
@@ -122,11 +122,11 @@ export function Segmented<T extends string>({
           className={cn(
             "flex shrink-0 items-center gap-1.5 rounded-lg font-medium transition-all",
             size === "sm" ? "h-7 px-2.5 text-[12px]" : "h-8 px-3 text-[13px]",
-            o.value === value ? "bg-surface text-ink shadow-card" : "text-ink-3 hover:text-ink",
+            o.value === value ? "bg-accent-soft text-accent-ink" : "text-ink-3 hover:bg-sunken hover:text-ink",
           )}
         >
           {o.label}
-          {o.count !== undefined && <span className={cn("tabular text-[11px]", o.value === value ? "text-ink-3" : "text-ink-4")}>{o.count}</span>}
+          {o.count !== undefined && <span className={cn("tabular text-[11px]", o.value === value ? "text-accent" : "text-ink-4")}>{o.count}</span>}
         </button>
       ))}
     </div>
@@ -139,9 +139,9 @@ export function PageHeader({ title, subtitle, actions, eyebrow }: { title: React
   return (
     <header className="flex flex-col gap-4 pb-8 sm:flex-row sm:items-end sm:justify-between">
       <div className="min-w-0 animate-fade-up">
-        {eyebrow && <div className="mb-2 text-[12px] font-medium uppercase tracking-[0.08em] text-ink-3">{eyebrow}</div>}
-        <h1 className="font-serif text-[34px] leading-[1.1] tracking-[-0.01em] text-ink sm:text-[40px]">{title}</h1>
-        {subtitle && <p className="mt-2 text-[15px] text-ink-2">{subtitle}</p>}
+        {eyebrow && <div className="mb-3 text-[11.5px] font-medium uppercase tracking-[0.32em] text-ink-3">{eyebrow}</div>}
+        <h1 className="font-serif text-[40px] font-semibold leading-[1.02] tracking-[-0.01em] text-ink [text-wrap:balance] sm:text-[48px]">{title}</h1>
+        {subtitle && <p className="mt-2.5 text-[16px] text-ink-2">{subtitle}</p>}
       </div>
       {actions && <div className="flex shrink-0 flex-wrap items-center gap-2">{actions}</div>}
     </header>
@@ -161,7 +161,7 @@ export function Divider({ className }: { className?: string }) {
 export function EmptyState({ icon, title, body, action }: { icon?: React.ReactNode; title: string; body?: string; action?: React.ReactNode }) {
   return (
     <div className="flex flex-col items-center justify-center px-6 py-16 text-center">
-      {icon && <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-sunken text-ink-3 [&_svg]:size-5">{icon}</div>}
+      {icon && <div className="mb-4 flex size-12 items-center justify-center rounded-2xl bg-t-green-bg text-t-green [&_svg]:size-5">{icon}</div>}
       <div className="text-[15px] font-medium text-ink">{title}</div>
       {body && <p className="mt-1 max-w-sm text-sm text-ink-3">{body}</p>}
       {action && <div className="mt-5">{action}</div>}

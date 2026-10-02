@@ -3,7 +3,8 @@
 import * as React from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { AlertOctagon, Search } from "lucide-react";
+import { Activity, AlertOctagon, Search } from "lucide-react";
+import { IconTile, type Tone } from "@/components/ui/icon-tile";
 import { useSnapshot } from "@/components/providers/health-store";
 import { ChangeChip, SectionLabel, Sparkline } from "@/components/health/bits";
 import { TrendChart } from "@/components/health/trend-chart";
@@ -15,6 +16,8 @@ import { allBiomarkerSeries, allergies, conditionSummaries, fmtDate, getDocument
 import { cn } from "@/lib/utils";
 
 type Tab = "biomarkers" | "conditions" | "vitals";
+
+const GROUP_TONE: Record<string, Tone> = { Thyroid: "amber", Metabolic: "blue", Lipids: "red", Blood: "red", Vitamins: "amber", Kidney: "blue", Liver: "violet", Inflammation: "violet" };
 
 export default function HealthPage() {
   return (
@@ -29,7 +32,7 @@ function Health() {
   const [tab, setTab] = React.useState<Tab>((params.get("tab") as Tab) || "biomarkers");
   return (
     <div>
-      <PageHeader title="Health Data" subtitle="See how your health has changed over time." />
+      <PageHeader eyebrow="Your measurements" title="Health Data" subtitle="See how your health has changed over time." />
       <Segmented
         options={[
           { value: "biomarkers", label: "Biomarkers" },
@@ -60,18 +63,23 @@ function Biomarkers() {
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {list.map(({ def, latest, previous, changePct, points }) => (
-          <Link key={def.code} href={`/health/${def.code.toLowerCase()}`} className="group flex flex-col rounded-2xl border border-line bg-surface p-5 shadow-card transition-all hover:-translate-y-0.5 hover:shadow-pop">
+          <Link key={def.code} href={`/health/${def.code.toLowerCase()}`} className="group flex flex-col rounded-[20px] border border-line-2 bg-surface p-5 shadow-card transition-all hover:-translate-y-0.5 hover:shadow-pop">
             <div className="flex items-start justify-between gap-3">
-              <div>
-                <div className="text-[14px] font-semibold text-ink">{def.shortName}</div>
-                <div className="text-[11.5px] text-ink-3">{def.group}</div>
+              <div className="flex items-center gap-3">
+                <IconTile tone={GROUP_TONE[def.group] ?? "green"} size="sm">
+                  <Activity strokeWidth={1.8} />
+                </IconTile>
+                <div>
+                  <div className="text-[15px] font-medium text-ink">{def.shortName}</div>
+                  <div className="text-[11.5px] text-ink-3">{def.group}</div>
+                </div>
               </div>
               {latest && latest.flag !== "normal" && latest.flag !== "unknown" && <Badge tone={latest.flag === "high" ? "high" : "low"}>{latest.flag === "high" ? "High" : "Low"}</Badge>}
             </div>
             {latest && (
               <>
                 <div className="mt-4 flex items-baseline gap-1.5">
-                  <span className="text-[28px] font-semibold tracking-[-0.02em] tabular text-ink">{formatValue(latest.canonicalValue!, def.decimals)}</span>
+                  <span className="font-serif text-[36px] font-semibold leading-none tabular text-ink">{formatValue(latest.canonicalValue!, def.decimals)}</span>
                   <span className="text-[13px] text-ink-3">{def.canonicalUnit}</span>
                 </div>
                 <div className="mt-0.5 text-[12px] text-ink-3">{fmtDate(latest.date)}</div>

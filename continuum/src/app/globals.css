@@ -1,105 +1,141 @@
 @import "tailwindcss";
 
 /*
- * Continuum design tokens.
- * Warm paper background, near-black ink, a single calm indigo accent.
- * Clinical status uses muted amber (out of range) and green (in range),
- * always paired with a text label — never colour alone.
+ * healthly design tokens.
+ * Soft sage paper, forest-green accent, deep green-black ink, and a set of
+ * tinted tiles (green / red / amber / blue / violet) for record types.
+ * Clinical status uses amber (out of range) and green (in range), always
+ * paired with a text label, never colour alone.
  */
 :root {
-  --bg: #f6f6f3;
+  --bg: #f7f8f5;
   --surface: #ffffff;
-  --surface-2: #fbfbf9;
-  --sunken: #f0f0ec;
-  --ink: #121417;
-  --ink-2: #4d525b;
-  --ink-3: #868b94;
-  --ink-4: #b4b8be;
-  --line: #e6e6e1;
-  --line-2: #efefea;
-  --accent: #3d5ce0;
-  --accent-ink: #2b45b8;
-  --accent-soft: #edf1fd;
-  --high: #a65a0b;
-  --high-soft: #fdf3e6;
-  --low: #8a4bb8;
-  --low-soft: #f5eefb;
-  --ok: #1d7a4f;
-  --ok-soft: #e8f5ee;
-  --danger: #b4302b;
-  --danger-soft: #fcecec;
+  --surface-2: #fafbf9;
+  --sunken: #f1f4f0;
+  --sidebar: #f3f5f1;
+  --ink: #17231d;
+  --ink-2: #4b5a52;
+  --ink-3: #85908a;
+  --ink-4: #b7bfba;
+  --line: #e6eae5;
+  --line-2: #eef1ed;
+  --accent: #2f6b4f;
+  --accent-ink: #1f4f39;
+  --accent-soft: #e4eee7;
+  --high: #b5651d;
+  --high-soft: #fdf1e4;
+  --low: #7b55b0;
+  --low-soft: #f2edf9;
+  --ok: #2f7a52;
+  --ok-soft: #e6f3ec;
+  --danger: #c2413b;
+  --danger-soft: #fdeceb;
   --on-ink: #ffffff;
   --on-accent: #ffffff;
-  --cat-consult: #3d5ce0;
-  --cat-diagnostic: #0f7a70;
-  --cat-medication: #7d43a8;
-  --cat-hospital: #b4302b;
-  --cat-procedure: #a65a0b;
+  --t-green: #2f7a57;
+  --t-green-bg: #e7f2eb;
+  --t-red: #d0463c;
+  --t-red-bg: #fdeceb;
+  --t-amber: #d58716;
+  --t-amber-bg: #fff2e0;
+  --t-blue: #3f5fd6;
+  --t-blue-bg: #eaeffd;
+  --t-violet: #7b55b0;
+  --t-violet-bg: #f2edf9;
+  --sun: #fcd9b3;
+  --hill-1: #edf1ec;
+  --hill-2: #e1e9e3;
+  --hill-3: #d3dfd7;
+  --cat-consult: var(--t-blue);
+  --cat-diagnostic: var(--t-green);
+  --cat-medication: var(--t-red);
+  --cat-hospital: var(--t-violet);
+  --cat-procedure: var(--t-amber);
 }
 
 /* Dark theme: follows the OS unless the viewer picked a theme explicitly. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0f1012;
-    --surface: #17181b;
-    --surface-2: #1c1d21;
-    --sunken: #232429;
-    --ink: #ecedef;
-    --ink-2: #b6b9c0;
-    --ink-3: #8a8f97;
-    --ink-4: #5b5f67;
-    --line: #2b2d32;
-    --line-2: #222429;
-    --accent: #8197ff;
-    --accent-ink: #a9b6ff;
-    --accent-soft: #1c2342;
+    --bg: #0e1311;
+    --surface: #151b18;
+    --surface-2: #19201c;
+    --sunken: #1e2622;
+    --sidebar: #111714;
+    --ink: #e7eee9;
+    --ink-2: #b2beb7;
+    --ink-3: #84918a;
+    --ink-4: #56625b;
+    --line: #26302b;
+    --line-2: #1f2824;
+    --accent: #6fbf94;
+    --accent-ink: #9bd8b5;
+    --accent-soft: #1a2e24;
     --high: #f0a75e;
     --high-soft: #31230f;
-    --low: #cb9ef2;
-    --low-soft: #2a1d37;
-    --ok: #5fca9c;
-    --ok-soft: #13291f;
-    --danger: #f2807a;
-    --danger-soft: #361a1a;
-    --on-ink: #121417;
-    --on-accent: #0f1012;
-    --cat-consult: #8197ff;
-    --cat-diagnostic: #4fc2b4;
-    --cat-medication: #c08ef0;
-    --cat-hospital: #f2807a;
-    --cat-procedure: #f0a75e;
+    --low: #c3a6f0;
+    --low-soft: #2a2238;
+    --ok: #6fc79a;
+    --ok-soft: #14291f;
+    --danger: #f08a82;
+    --danger-soft: #35201f;
+    --on-ink: #0e1311;
+    --on-accent: #0e1311;
+    --t-green: #7fcaa0;
+    --t-green-bg: #1a2d23;
+    --t-red: #f08a82;
+    --t-red-bg: #34201f;
+    --t-amber: #f2b866;
+    --t-amber-bg: #33281a;
+    --t-blue: #93a8ff;
+    --t-blue-bg: #1d2540;
+    --t-violet: #c3a6f0;
+    --t-violet-bg: #2a2238;
+    --sun: #6b4a2c;
+    --hill-1: #141b17;
+    --hill-2: #18211c;
+    --hill-3: #1d2822;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0f1012;
-  --surface: #17181b;
-  --surface-2: #1c1d21;
-  --sunken: #232429;
-  --ink: #ecedef;
-  --ink-2: #b6b9c0;
-  --ink-3: #8a8f97;
-  --ink-4: #5b5f67;
-  --line: #2b2d32;
-  --line-2: #222429;
-  --accent: #8197ff;
-  --accent-ink: #a9b6ff;
-  --accent-soft: #1c2342;
+  --bg: #0e1311;
+  --surface: #151b18;
+  --surface-2: #19201c;
+  --sunken: #1e2622;
+  --sidebar: #111714;
+  --ink: #e7eee9;
+  --ink-2: #b2beb7;
+  --ink-3: #84918a;
+  --ink-4: #56625b;
+  --line: #26302b;
+  --line-2: #1f2824;
+  --accent: #6fbf94;
+  --accent-ink: #9bd8b5;
+  --accent-soft: #1a2e24;
   --high: #f0a75e;
   --high-soft: #31230f;
-  --low: #cb9ef2;
-  --low-soft: #2a1d37;
-  --ok: #5fca9c;
-  --ok-soft: #13291f;
-  --danger: #f2807a;
-  --danger-soft: #361a1a;
-  --on-ink: #121417;
-  --on-accent: #0f1012;
-  --cat-consult: #8197ff;
-  --cat-diagnostic: #4fc2b4;
-  --cat-medication: #c08ef0;
-  --cat-hospital: #f2807a;
-  --cat-procedure: #f0a75e;
+  --low: #c3a6f0;
+  --low-soft: #2a2238;
+  --ok: #6fc79a;
+  --ok-soft: #14291f;
+  --danger: #f08a82;
+  --danger-soft: #35201f;
+  --on-ink: #0e1311;
+  --on-accent: #0e1311;
+  --t-green: #7fcaa0;
+  --t-green-bg: #1a2d23;
+  --t-red: #f08a82;
+  --t-red-bg: #34201f;
+  --t-amber: #f2b866;
+  --t-amber-bg: #33281a;
+  --t-blue: #93a8ff;
+  --t-blue-bg: #1d2540;
+  --t-violet: #c3a6f0;
+  --t-violet-bg: #2a2238;
+  --sun: #6b4a2c;
+  --hill-1: #141b17;
+  --hill-2: #18211c;
+  --hill-3: #1d2822;
   color-scheme: dark;
 }
 
@@ -127,11 +163,22 @@
   --color-danger-soft: var(--danger-soft);
   --color-on-ink: var(--on-ink);
   --color-on-accent: var(--on-accent);
+  --color-sidebar: var(--sidebar);
+  --color-t-green: var(--t-green);
+  --color-t-green-bg: var(--t-green-bg);
+  --color-t-red: var(--t-red);
+  --color-t-red-bg: var(--t-red-bg);
+  --color-t-amber: var(--t-amber);
+  --color-t-amber-bg: var(--t-amber-bg);
+  --color-t-blue: var(--t-blue);
+  --color-t-blue-bg: var(--t-blue-bg);
+  --color-t-violet: var(--t-violet);
+  --color-t-violet-bg: var(--t-violet-bg);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-serif: var(--font-serif-display);
-  --shadow-card: 0 1px 0 rgb(18 20 23 / 0.03), 0 1px 2px rgb(18 20 23 / 0.04);
-  --shadow-pop: 0 12px 32px -8px rgb(18 20 23 / 0.16), 0 2px 6px rgb(18 20 23 / 0.06);
+  --shadow-card: 0 1px 2px rgb(23 35 29 / 0.03), 0 4px 16px -6px rgb(23 35 29 / 0.06);
+  --shadow-pop: 0 16px 40px -12px rgb(23 35 29 / 0.18), 0 2px 6px rgb(23 35 29 / 0.05);
   --animate-fade-up: fade-up 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   --animate-fade-in: fade-in 0.3s ease both;
   --animate-shimmer: shimmer 1.6s linear infinite;
@@ -181,7 +228,12 @@ body {
 }
 
 .tabular {
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* The display serif defaults to old-style figures; health numbers read better lining. */
+.font-serif {
+  font-variant-numeric: lining-nums;
 }
 
 /* Thin, quiet scrollbars */

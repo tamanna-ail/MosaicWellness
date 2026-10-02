@@ -19,7 +19,7 @@ type Item =
   | { kind: "doc"; key: string; id: string; label: string; detail: string; type: Parameters<typeof DocTypeIcon>[0]["type"] }
   | { kind: "ask"; key: string; label: string };
 
-export function GlobalSearch() {
+export function GlobalSearch({ variant = "page" }: { variant?: "page" | "bar" }) {
   const s = useSnapshot();
   const router = useRouter();
   const [q, setQ] = React.useState("");
@@ -81,7 +81,7 @@ export function GlobalSearch() {
 
   return (
     <div ref={boxRef} className="relative">
-      <div className={cn("flex h-12 items-center gap-3 rounded-2xl border bg-surface px-4 shadow-card transition-[border,box-shadow]", open && q ? "border-accent/40 ring-4 ring-accent/8" : "border-line")}>
+      <div className={cn("flex h-12 items-center gap-3 rounded-2xl border bg-surface px-4 transition-[border,box-shadow]", variant === "page" && "shadow-card", open ? "border-accent/40 ring-4 ring-accent/8" : "border-line")}>
         <Search className="size-[18px] text-ink-3" strokeWidth={1.75} />
         <input
           ref={inputRef}
@@ -111,7 +111,7 @@ export function GlobalSearch() {
         </span>
       </div>
 
-      {!q && (
+      {!q && variant === "page" && (
         <div className="mt-3 flex flex-wrap items-center gap-2 text-[12.5px] text-ink-3">
           <span>Try</span>
           {EXAMPLES.map((e) => (
@@ -127,6 +127,27 @@ export function GlobalSearch() {
               {e}
             </button>
           ))}
+        </div>
+      )}
+
+      {open && !q && variant === "bar" && (
+        <div className="absolute inset-x-0 top-[calc(100%+8px)] z-40 rounded-2xl border border-line bg-surface p-3 shadow-pop animate-fade-in">
+          <div className="px-1 pb-2 text-[11.5px] font-medium uppercase tracking-[0.14em] text-ink-3">Try searching</div>
+          <div className="flex flex-wrap gap-2">
+            {EXAMPLES.map((e) => (
+              <button
+                key={e}
+                onMouseDown={(ev) => ev.preventDefault()}
+                onClick={() => {
+                  setQ(e);
+                  inputRef.current?.focus();
+                }}
+                className="rounded-full border border-line bg-surface-2 px-3 py-1.5 text-[13px] text-ink-2 transition-colors hover:border-accent/40 hover:text-accent-ink"
+              >
+                {e}
+              </button>
+            ))}
+          </div>
         </div>
       )}
 

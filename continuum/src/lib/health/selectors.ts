@@ -400,3 +400,7 @@ export function ageFrom(dob: string, today = todayISO()) {
   const [ty, tm, td] = today.split("-").map(Number);
   return ty - y - (tm < m || (tm === m && td < d) ? 1 : 0);
 }
+
+export function upcomingAppointments(s: HealthSnapshot, today = todayISO()) {
+  return [...(s.appointments ?? [])].filter((a) => a.date >= today).sort((a, b) => a.date.localeCompare(b.date));
+}
