@@ -1,0 +1,59 @@
+# Builds Continuum as a static site and publishes it to GitHub Pages.
+# Pages has no server, so API routes are left out of this build and the app
+# uses its on-device engines (demo extraction, local Ask AI, browser storage).
+name: Deploy Continuum to GitHub Pages
+
+on:
+  push:
+    branches: [claude/gallant-bell-rdvdrw]
+    paths: ["continuum/**", ".github/workflows/deploy-pages.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: continuum
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: continuum/package-lock.json
+      - id: pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - run: npm ci
+      - name: Build static export
+        run: |
+          rm -rf src/app/api
+          npm run build
+          touch out/.nojekyll
+        env:
+          STATIC_EXPORT: "true"
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: continuum/out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
