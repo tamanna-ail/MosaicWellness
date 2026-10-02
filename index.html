@@ -63,6 +63,41 @@ p{margin:0}
 .pill.cold{color:var(--muted)}
 .pill.xp{color:var(--leaf)}
 .pill.dry{color:var(--dry);background:var(--dry-soft);border-color:transparent}
+.help{flex:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--surface);font-family:var(--f-display);font-weight:700;color:var(--leaf);font-size:1rem;line-height:1}
+.hello{display:flex;flex-direction:column;gap:2px}
+.hello h1{font-size:1.45rem}
+.hello p{color:var(--muted);font-size:.92rem}
+
+/* One contextual nudge at a time */
+.nudge{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:0;border-radius:18px;padding:10px 14px 10px 10px;background:var(--leaf-soft);color:var(--ink)}
+.nudge svg.fl{width:40px;height:48px;flex:none}
+.nudge .bt{flex:1;min-width:0;display:flex;flex-direction:column}
+.nudge .bt b{font-family:var(--f-display);font-weight:600}
+.nudge .bt small{color:var(--muted);font-size:.82rem}
+.nudge .go{flex:none;font-size:1.4rem;color:var(--leaf);font-weight:700}
+.nudge.dry{background:var(--dry-soft)}
+.nudge.dry .go{color:var(--dry)}
+.nudge .meter{display:block;height:6px;border-radius:999px;background:color-mix(in srgb,var(--dry) 25%,transparent);margin-top:6px;overflow:hidden}
+.nudge .meter i{display:block;height:100%;background:var(--dry);border-radius:999px}
+.sprouts{display:flex;gap:4px;align-items:flex-end}
+.sprouts svg{width:20px;height:20px;color:var(--line);transition:color .3s,transform .3s}
+.sprouts svg.on{color:var(--leaf);transform:scale(1.12)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:.8rem;font-weight:700;font-variant-numeric:tabular-nums}
+.chip.go{background:var(--leaf);border-color:var(--leaf);color:#fff}
+.chip.dry{background:var(--dry-soft);border-color:transparent;color:var(--dry)}
+/* Settings-style menu */
+.menu{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.mrow{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);background:none;padding:13px 14px}
+.mrow:last-child{border-bottom:0}
+.mrow .mi{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--leaf-soft);color:var(--leaf)}
+.mrow .mi svg{width:20px;height:20px}
+.mrow .bt{flex:1;min-width:0;display:flex;flex-direction:column}
+.mrow .bt b{font-weight:600}
+.mrow .bt small{color:var(--muted);font-size:.8rem}
+.mrow .chev{color:var(--muted);font-size:1.3rem;font-weight:700}
+.mrow:hover{background:var(--surface-2)}
+.sheet h2+p{margin-top:-6px}
 
 /* Garden scene: a committed illustration whose palette follows the real time of day, not the app theme */
 .scene{position:relative;border-radius:24px;overflow:hidden;isolation:isolate;box-shadow:var(--shadow);
@@ -126,6 +161,8 @@ p{margin:0}
 .goal.done{background:var(--surface-2)}
 .goal.done .chk{background:var(--leaf);border-color:var(--leaf)}
 .goal.done .chk svg{opacity:1}
+.goal.just .chk{animation:boing .45s cubic-bezier(.3,1.6,.5,1)}
+@keyframes boing{0%{transform:scale(.6)}60%{transform:scale(1.18)}100%{transform:scale(1)}}
 .goal .qt{flex:1;min-width:0;display:flex;flex-direction:column}
 .goal .qt b{font-weight:600;overflow-wrap:anywhere}
 .goal.done .qt b{color:var(--muted);text-decoration:line-through;text-decoration-thickness:1.5px}
@@ -134,15 +171,16 @@ p{margin:0}
 .gi svg{width:22px;height:22px}
 .g0{background:var(--eat)} .g1{background:var(--rest)} .g2{background:var(--move)} .g3{background:var(--mind)} .g4{background:var(--accent)}
 
-/* Flower ladder */
-.ladder{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-.rung{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:8px 4px 10px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center}
+/* Flower ladder: a dotted garden path from marigold to lily */
+.ladder{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.ladder::before{content:"";position:absolute;left:12%;right:12%;top:38px;border-top:3px dotted var(--line);z-index:0}
+.rung{position:relative;z-index:1;background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:8px 4px 10px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center}
 .rung svg{width:50px;height:58px}
 .rung b{font-size:.8rem;font-weight:700;line-height:1.2}
 .rung small{font-size:.72rem;color:var(--muted);line-height:1.25}
 .rung .xpv{font-size:.74rem;font-weight:700;color:var(--leaf)}
 .rung.locked svg{filter:grayscale(1);opacity:.35}
-.rung.locked{background:none;border-style:dashed}
+.rung.locked{background:var(--bg);border-style:dashed}
 .rung.next{border-color:var(--accent);border-style:solid}
 
 /* Lists */
@@ -253,7 +291,7 @@ p{margin:0}
 @keyframes rise{from{transform:translateY(40px);opacity:.4}}
 @keyframes pop{from{transform:translate(-50%,10px);opacity:0}}
 @media (prefers-reduced-motion: reduce){
-  .sway,.bfly,.bfly svg{animation:none}
+  .sway,.bfly,.bfly svg,.goal.just .chk{animation:none}
   .sheet,.toast,.backdrop{animation:none}
   .plot svg.plant,.bar i{transition:none}
 }
@@ -471,76 +509,84 @@ function scene(st, interactive){
 }
 
 /* ---------- Views ---------- */
-let tab="today";
+let tab="today", justToggled=null;
+const ICON = {
+  goals:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6.5h14M5 12h14M5 17.5h9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>`,
+  book:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C6.5 4 9.5 4 12 6c2.5-2 5.5-2 8-.5V19c-2.5-1.5-5.5-1.5-8 .5-2.5-2-5.5-2-8-.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 6v13.5" stroke="currentColor" stroke-width="2"/></svg>`,
+  clock:`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+  people:`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.5" r="3.5" fill="currentColor"/><path d="M2.5 20c.5-4 3.2-6 6.5-6s6 2 6.5 6z" fill="currentColor"/><path d="M16 5.5a3 3 0 1 1 0 6M18 14c2 .6 3.3 2.6 3.5 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`
+};
 function topBar(st){
-  const cold=st.streak===0;
   return `<header class="top">
     <div class="brand">${sproutIcon("var(--leaf)")}Tamanna</div>
     <div class="pills">
-      <span class="pill streak ${cold?"cold":""}" title="Goal days in a row">${sproutIcon()}<span class="num">${st.streak}</span>-day streak</span>
-      <span class="pill xp" title="Total XP from your flowers">${starIcon()}<span class="num">${st.xp}</span> XP</span>
-      ${st.health<100?`<span class="pill dry" title="Garden health">${dropIcon()}<span class="num">${st.health}%</span></span>`:""}
+      <span class="pill streak ${st.streak?"":"cold"}" title="Goal days in a row">${sproutIcon()}<span class="num">${st.streak}</span><span class="sr">day streak</span></span>
+      <span class="pill xp" title="Total XP from your flowers">${starIcon()}<span class="num">${st.xp}</span><span class="sr">XP</span></span>
+      <button class="help" data-act="how" aria-label="How Tamanna works">?</button>
     </div></header>`;
 }
+function greeting(){ const h=new Date().getHours(); return h<12?"Good morning":h<17?"Good afternoon":"Good evening"; }
+const flowerWord = (f,n) => n===1?FLOWERS[f].name.toLowerCase():FLOWERS[f].name.toLowerCase()+"s";
 function nextUnlockText(st){
-  if(st.tier>=3) return `Every flower unlocked. Keep your streak to keep the lilies earning.`;
+  if(st.tier>=3) return `Every flower unlocked. Keep your streak and the lilies keep earning.`;
   const f=ORDER[st.tier+1], left=NEEDS[st.tier+1]-st.since;
-  return `<b>${FLOWERS[f].name}</b> unlocks after ${plural(left,"more goal day")} in a row.`;
+  return `${FLOWERS[f].name} unlocks in ${plural(left,"goal day")} in a row.`;
 }
 function ladder(st){
   return `<div class="ladder">${ORDER.map((f,i)=>{
     const got=i<=st.tier, nxt=i===st.tier+1;
-    const sub = i===0 ? "From day one" : got ? "Unlocked" : nxt ? `${st.since} / ${NEEDS[i]} days` : `${NEEDS[i]} days after ${FLOWERS[ORDER[i-1]].name.toLowerCase()}`;
-    return `<div class="rung ${got?"":"locked"} ${nxt?"next":""}">${flowerSVG(f)}<b>${FLOWERS[f].name}</b><span class="xpv">${FLOWERS[f].xp} XP / day</span><small>${sub}</small></div>`;
+    const sub = got ? "Unlocked" : nxt ? `${st.since} of ${NEEDS[i]} days` : `${NEEDS[i]} days`;
+    return `<div class="rung ${got?"":"locked"} ${nxt?"next":""}">${flowerSVG(f)}<b>${FLOWERS[f].name}</b><span class="xpv">${FLOWERS[f].xp} XP</span><small>${sub}</small></div>`;
   }).join("")}</div>`;
 }
 function plantStatus(st){
-  if(st.rec) return `Your garden is recovering. Complete your goals for ${plural(st.rec.left,"more day")} to bring it back to 100%. You can't add flowers until then.`;
-  if(st.blocked) return `Your garden recovered today. You can plant again after your next goal day.`;
-  if(st.avail>0) return `You have ${plural(st.avail,"flower")} ready to plant.`;
+  if(st.rec) return `Your garden is recovering. Finish your goals for ${plural(st.rec.left,"more day")} to bring it back to 100%. You can't plant until then.`;
+  if(st.blocked) return `Back in full bloom. You can plant again after your next goal day.`;
+  if(st.avail>0) return `Tap an empty plot to plant.`;
   if(current().length>=PLOTS) return `Every plot is full. Replace a flower with a higher one when you earn your next.`;
-  return S.full[T()] ? `Today's flower is planted. Come back tomorrow.` : `Complete today's goals to earn a flower.`;
+  return S.full[T()] ? `Today's flower is planted. See you tomorrow.` : `Finish today's goals to earn a flower.`;
+}
+// The single most useful thing to do next, shown on Today and Garden.
+function nudge(st, where){
+  if(st.rec) return `<div class="nudge dry" role="status">${flowerSVG(current()[0]?current()[0].f:"marigold","fl",`style="filter:saturate(.3) sepia(.6)"`)}<span class="bt"><b>Your flowers are drying · ${st.health}%</b><small>Finish your goals ${plural(st.rec.left,"more day")} to revive them. No planting until then.</small><span class="meter"><i style="width:${st.health}%"></i></span></span></div>`;
+  if(st.avail>0 && !st.blocked && where==="today") return `<button class="nudge" data-go="garden">${flowerSVG(ORDER[st.tier],"fl")}<span class="bt"><b>${st.avail>1?`${st.avail} flowers are`:"A flower is"} ready to plant</b><small>Up to a ${FLOWERS[ORDER[st.tier]].name.toLowerCase()}. Tap to open your garden.</small></span><span class="go" aria-hidden="true">›</span></button>`;
+  return "";
 }
 function todayView(st){
   const goals=activeGoals(), list=doneList(T()), n=goals.filter(g=>list.includes(g.id)).length, full=!!S.full[T()];
-  const dots=goals.map((g,i)=>`<span class="dot ${i<n?"on":""}"></span>`).join("");
-  const incToday = st.days[T()] && st.days[T()].inc;
-  const potential = Math.round(current().reduce((a,f)=>a+FLOWERS[f.f].xp,0)*st.health/100);
+  const inc=st.days[T()]&&st.days[T()].inc;
+  const potential=Math.round(current().reduce((a,f)=>a+FLOWERS[f.f].xp,0)*st.health/100);
+  const sub = full ? (inc?`Goal day done. Your flowers earned ${inc} XP.`:"Goal day done. Your garden is watered.")
+    : (potential?`Finish your goals and your flowers earn ${potential} XP.`:`Finish your goals to grow your garden.`);
+  const sprouts=goals.map((g,i)=>sproutIcon().replace("<svg ",`<svg class="${i<n?"on":""}" `)).join("");
   const goalBtns = goals.length ? goals.map(g=>{
     const isDone=list.includes(g.id);
-    return `<button class="goal ${isDone?"done":""}" data-goal="${esc(g.id)}" aria-pressed="${isDone}"><span class="chk">${checkSVG}</span><span class="qt"><b>${esc(g.t)}</b><small>${isDone?"Done for today":"Tap when done"}</small></span><span class="gi ${goalCls(g)}">${goalIcon(g)}</span></button>`;
-  }).join("") : `<div class="card"><p class="muted">No goals start today. Add one in the You tab.</p></div>`;
-  const canPlant = st.avail>0 && !st.blocked;
+    return `<button class="goal ${isDone?"done":""} ${justToggled===g.id&&isDone?"just":""}" data-goal="${esc(g.id)}" aria-pressed="${isDone}"><span class="chk">${checkSVG}</span><span class="qt"><b>${esc(g.t)}</b></span><span class="gi ${goalCls(g)}">${goalIcon(g)}</span></button>`;
+  }).join("") : `<p class="muted">Your new goals start tomorrow.</p>`;
+  justToggled=null;
   return topBar(st)+
-    `<button class="scene-link" data-go="garden" aria-label="Open your garden">${scene(st,false)}</button>
-    ${st.rec?`<div class="card dry"><div class="sec-h"><h3>Your flowers are drying</h3><span class="num" style="font-weight:700;color:var(--dry)">${st.health}%</span></div>
-      <div class="bar dry"><i style="width:${st.health}%"></i></div>
-      <p class="next">A missed day dries every flower by ${DRY_PER_MISS}%. Complete your goals for ${plural(st.rec.left,"more day")} to bring the garden back to 100%. No new flowers until then.</p></div>`:""}
-    <div class="card">
-      <div class="sec-h"><h2>Today</h2><span class="muted num">${n} of ${goals.length} goals</span></div>
-      <div class="dots">${dots}</div>
-      <p class="next">${full?`Goal day complete${incToday?`. Your flowers earned <b>${incToday} XP</b>`:""}.`:`Finish every goal to grow your streak${potential?` and earn <b>${potential} XP</b> from your flowers`:""}.`}</p>
-      <p class="next">${nextUnlockText(st)}</p>
-    </div>
-    <section class="section"><div class="sec-h"><h2>My goals</h2><button class="btn small ghost" data-go="you">Edit goals</button></div>${goalBtns}</section>
-    ${canPlant?`<button class="btn leaf wide" data-go="garden">Plant ${st.avail>1?`your ${st.avail} flowers`:"your flower"}</button>`:""}
-    <p class="fineprint">A day counts when every goal is done. Each goal day earns a flower, and each flower earns XP on every goal day after it.</p>`;
+    `<section class="hello"><h1>${greeting()}, ${esc(S.name)}</h1><p>${sub}</p></section>
+    <button class="scene-link" data-go="garden" aria-label="Open your garden">${scene(st,false)}</button>
+    ${nudge(st,"today")}
+    <section class="section"><div class="sec-h"><h2>Today's goals</h2><span class="sprouts" aria-label="${n} of ${goals.length} done">${sprouts}</span></div>
+      ${goalBtns}
+      <div class="sec-h"><span class="fineprint">${nextUnlockText(st)}</span><button class="btn small ghost" data-act="goals">Edit goals</button></div>
+    </section>`;
 }
 function gardenView(st){
   const planted=current().length;
   const earning=Math.round(current().reduce((a,f)=>a+FLOWERS[f.f].xp,0)*st.health/100);
-  const counts=ORDER.map(f=>[f,current().filter(x=>x.f===f).length]).filter(x=>x[1]);
+  const canPlant=st.avail>0&&!st.blocked;
   return topBar(st)+scene(st,true)+
-    `<div class="card ${st.rec||st.blocked?"dry":""}"><div class="sec-h"><h3>${st.avail>0&&!st.blocked?"Ready to plant":"Planting"}</h3><span class="muted num">${planted} of ${PLOTS} plots</span></div>
-      <p class="next">${plantStatus(st)}${st.avail>0&&!st.blocked?" Tap an empty plot.":""}</p>
-      <p class="next">Your garden earns <b>${earning} XP</b> on each goal day${st.health<100?` at ${st.health}% health`:""}.${counts.length?" "+counts.map(([f,c])=>`${c} ${FLOWERS[f].name.toLowerCase()}${c===1?"":"s"}`).join(", ")+".":""}</p></div>
-    <section class="section"><div class="sec-h"><h2>Flower ladder</h2><span class="muted">Lowest to highest</span></div>${ladder(st)}
-      <p class="fineprint">${nextUnlockText(st).replace(/<\/?b>/g,"")} Missing a day resets the count toward the next flower; flowers you have unlocked stay unlocked.</p></section>
-    <section class="section card"><h3>When a day is missed</h3>
-      <p class="next">Every flower dries and shrivels by ${DRY_PER_MISS}% for each missed day. It takes ${RECOVERY_DAYS} goal days to bring them back to 100%, and you can't add a flower during those days. Dry flowers earn less XP. Flowers never die.</p>
-    </section>`;
+    `<div class="chips">
+      ${canPlant?`<span class="chip go">${plural(st.avail,"flower")} to plant</span>`:st.blocked?`<span class="chip dry">Planting paused</span>`:""}
+      <span class="chip">${earning} XP per goal day</span>
+      <span class="chip">${planted} of ${PLOTS} plots</span>
+    </div>
+    ${st.rec?nudge(st,"garden"):`<p class="muted" style="margin-top:-8px">${plantStatus(st)}</p>`}
+    <section class="section"><div class="sec-h"><h2>Flower path</h2><span class="muted">${nextUnlockText(st)}</span></div>${ladder(st)}</section>`;
 }
-/* Neighbours (simulated for the demo) */
+/* Friends (simulated for the demo) */
 function rnd(s){ let h=2166136261; for(let i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619);} return ((h>>>0)%10000)/10000; }
 const NB=[["Meera","#c2557a"],["Kabir","#2e76b8"],["Ishita","#8a5fb5"],["Rohan","#c9701d"],["Zoya","#2f8a62"],["Aarav","#b2493a"],["Dev","#4a6fa5"],["Tara","#7b8a2e"]];
 const friendDone = (n,k) => rnd(n+"|"+k) < 0.86;
@@ -550,26 +596,17 @@ function neighboursView(st){
   const rows=NB.map(([n,c])=>({n,c,xp:Math.round(dw*(4+rnd(n+wk)*60))})).concat([{n:"You",me:true,xp:weekXP(st)}]).sort((a,b)=>b.xp-a.xp);
   const board=rows.map((r,i)=>(i===3?`<div class="zone" style="color:var(--muted)">Safe zone</div>`:"")+`<div class="row ${r.me?"me":""}"><span class="rk">${i+1}</span><span>${r.me?"<b>You</b>":r.n}</span><span class="xp">${r.xp} XP</span></div>`).join("");
   const buddies=[NB[0],NB[1]].map(([n,c])=>{
-    const bs=buddyStreak(n), fd=friendDone(n,T()), me=!!S.full[T()];
-    const status = fd ? `${n} has finished today.` : `${n} hasn't finished today yet.`;
-    return `<div class="buddy"><span class="av" style="background:${c}">${n[0]}</span><div class="bt"><b>${n}</b><small>${status}${me?"":" Finish yours to keep the streak."}</small></div><span class="bstreak">${sproutIcon()}<span>${bs}</span></span><button class="btn small ghost" data-nudge="${n}" data-done="${fd?1:0}">${fd?"Send seed":"Nudge"}</button></div>`;
+    const bs=buddyStreak(n), fd=friendDone(n,T());
+    return `<div class="buddy"><span class="av" style="background:${c}">${n[0]}</span><div class="bt"><b>${n}</b><small>${fd?"Done for today":"Not done yet"}</small></div><span class="bstreak" title="Shared streak">${sproutIcon()}<span>${bs}</span></span><button class="btn small ghost" data-nudge="${n}" data-done="${fd?1:0}">${fd?"Send seed":"Nudge"}</button></div>`;
   }).join("");
   return topBar(st)+
-    `<section class="section card"><div class="sec-h"><h2>Buddy gardens</h2><span class="muted">Shared streaks</span></div>
-      <p class="fineprint">A buddy streak grows only on days when you both finish your goals.</p>
-      <div>${buddies}</div></section>
+    `<section class="section card"><div class="sec-h"><h2>Buddy streaks</h2><span class="muted">Grow when you both finish</span></div><div>${buddies}</div></section>
     <section class="section card"><div class="sec-h"><h2>Marigold League</h2><span class="muted num">Day ${dw} of 7</span></div>
       <div class="zone">Top three move up to Lily League</div>
       <div class="board">${board}</div></section>
-    <p class="fineprint">Neighbours on this screen are simulated so the demo works for a single visitor. The league ranks the XP your flowers earned this week.</p>`;
+    <p class="fineprint">Friends here are simulated for the demo. The league ranks XP your flowers earned this week.</p>`;
 }
 let confirmDelete=false, addingOther=false;
-function goalAdder(existing, ctx){
-  const missing=PRESETS.filter(p=>!existing.some(g=>g.id===p.id));
-  return `${missing.length?`<div class="choices">${missing.map(p=>`<button class="choice" data-addpreset="${p.id}" aria-pressed="false"><span class="gi g${PRESETS.indexOf(p)}">${GOAL_ICONS[p.icon]}</span><span class="qt"><b>${p.t}</b><small>${p.sub}</small></span><span class="tick" aria-hidden="true">+</span></button>`).join("")}</div>`:""}
-    <form class="field" data-form="${ctx}"><label for="other-${ctx}">Other goal</label>
-      <div class="inrow"><input class="input" id="other-${ctx}" name="goal" maxlength="60" placeholder="e.g. Journal for five minutes" autocomplete="off"><button class="btn leaf" type="submit">Add</button></div></form>`;
-}
 function youView(st){
   const goodDays=Object.keys(st.days).filter(k=>st.days[k].full).length;
   const start=addDays(weekStart(),-28), t=T();
@@ -579,8 +616,8 @@ function youView(st){
     const c = k>t?"future": k<S.start?"pre": d&&d.miss?"miss": d&&d.full&&d.recovering?"rec": d&&d.full?"full": (k===t&&S.full[k])?"full":"";
     cal+=`<span class="c ${c} ${k===t?"today":""}" title="${fmtDate(k)}${d&&d.miss?": missed":d&&d.full?": goal day":""}"></span>`;
   }
-  const goals=S.goals.map(g=>`<div class="gline"><span class="gi ${goalCls(g)}">${goalIcon(g)}</span><div class="bt"><b>${esc(g.t)}</b>${g.from>t?`<small>Starts tomorrow</small>`:""}</div>${S.goals.length>1?`<button class="x" data-delgoal="${esc(g.id)}" aria-label="Remove goal: ${esc(g.t)}">&times;</button>`:""}</div>`).join("");
-  const others=Object.values(DB.users).filter(u=>u.id!==S.id);
+  const others=Object.values(DB.users).filter(u=>u.id!==S.id).length;
+  const row=(act,icon,title,sub)=>`<button class="mrow" data-act="${act}"><span class="mi">${icon}</span><span class="bt"><b>${title}</b><small>${sub}</small></span><span class="chev" aria-hidden="true">›</span></button>`;
   return topBar(st)+
     `<section class="profile"><span class="av lg">${esc((S.name||"G")[0].toUpperCase())}</span><div><h1>${esc(S.name)}</h1><p class="muted">Gardening since ${fmtDate(S.created)}</p></div></section>
     <section class="stats">
@@ -589,38 +626,61 @@ function youView(st){
       <div class="stat"><b>${st.xp}</b><span>Total XP</span></div>
       <div class="stat"><b>${goodDays}</b><span>Goal days</span></div>
     </section>
-    <section class="card section"><div class="sec-h"><h2>My goals</h2><span class="muted">${plural(S.goals.length,"goal")}</span></div>
-      <div class="glist">${goals}</div>
-      <h3 style="margin-top:4px">Add a goal</h3>${goalAdder(S.goals,"profile")}
-      <p class="fineprint">New goals start tomorrow, so adding one never undoes today's progress.</p></section>
-    <section class="card section"><div class="sec-h"><h3>Last five weeks</h3></div><div class="cal">${cal}</div>
+    <section class="card section"><h3>Last five weeks</h3><div class="cal">${cal}</div>
       <div class="legend"><span><i style="background:var(--leaf)"></i>Goal day</span><span><i style="background:var(--leaf-soft);border:1px solid var(--leaf)"></i>Recovering</span><span><i style="background:var(--dry)"></i>Missed</span></div></section>
-    <section class="card section"><h3>How Tamanna works</h3>
-      <ol class="howto">
-        <li>Pick lifestyle goals a wearable can't measure. A day counts when every goal is done.</li>
-        <li>Each goal day earns a flower to plant. Marigolds earn 1 XP a day, sunflowers 5, red roses 20 and pink lilies 30.</li>
-        <li>Five goal days in a row unlock the sunflower. Ten more unlock the red rose, and twenty more unlock the pink lily.</li>
-        <li>A missed day dries every flower by ${DRY_PER_MISS}%. Three goal days bring them back, and you can't plant during those days.</li>
-      </ol></section>
-    <section class="card section"><div class="sec-h"><h3>Try it out</h3>${S.sample?`<span class="muted">Sample garden</span>`:""}</div>
-      <p class="fineprint">Move the calendar to see the rules play out. Skipping a day without finishing your goals counts as a miss.</p>
-      <div class="controls">
-        <button class="btn small leaf" data-act="finish">Finish today's goals</button>
-        <button class="btn small ghost" data-act="tomorrow">Jump to tomorrow</button>
-        <button class="btn small ghost" data-act="ff5">Five goal days</button>
-      </div>
-      ${S.offset?`<p class="fineprint">Calendar moved ${plural(S.offset,"day")} ahead of today.</p>`:""}
-    </section>
-    <section class="card section"><h3>Gardeners on this device</h3>
-      ${others.length?`<div class="glist">${others.map(u=>`<div class="gline"><span class="av">${esc((u.name||"G")[0].toUpperCase())}</span><div class="bt"><b>${esc(u.name)}</b><small>${plural(u.goals.length,"goal")}</small></div><button class="btn small ghost" data-switch="${esc(u.id)}">Switch</button></div>`).join("")}</div>`:""}
-      <div class="controls">
-        <button class="btn small ghost" data-act="register">Register a new gardener</button>
-        ${DB.users.sample?"":`<button class="btn small ghost" data-act="sample">Open the sample garden</button>`}
-        ${confirmDelete?`<button class="btn small danger" data-act="del-yes">Delete ${esc(S.name)}'s garden</button><button class="btn small ghost" data-act="del-no">Keep it</button>`:`<button class="btn small ghost" data-act="del">Delete this garden</button>`}
-      </div>
-      <p class="fineprint">Gardens are saved in this browser.</p></section>`;
+    <nav class="menu" aria-label="Settings">
+      ${row("goals",ICON.goals,"My goals",plural(S.goals.length,"goal")+" · add or remove")}
+      ${row("how",ICON.book,"How Tamanna works","Flowers, XP and dry days")}
+      ${row("demo",ICON.clock,"Demo time travel","Skip ahead to see the rules play out")}
+      ${row("accounts",ICON.people,"Gardeners on this device",others?`${others+1} gardeners · switch or add`:"Add a gardener or open the sample")}
+    </nav>`;
 }
-
+/* Sheets opened from the Me menu */
+function goalsSheet(focusInput){
+  const t=T(), missing=PRESETS.filter(p=>!S.goals.some(g=>g.id===p.id));
+  const list=S.goals.map(g=>`<div class="gline"><span class="gi ${goalCls(g)}">${goalIcon(g)}</span><div class="bt"><b>${esc(g.t)}</b>${g.from>t?`<small>Starts tomorrow</small>`:""}</div>${S.goals.length>1?`<button class="x" data-delgoal="${esc(g.id)}" aria-label="Remove goal: ${esc(g.t)}">&times;</button>`:""}</div>`).join("");
+  sheet(`<h2>My goals</h2><p class="muted">New goals start tomorrow, so today's progress is safe.</p>
+    <div class="glist">${list}</div>
+    ${missing.length?`<div class="choices">${missing.map(p=>`<button class="choice" data-addpreset="${p.id}"><span class="gi g${PRESETS.indexOf(p)}">${GOAL_ICONS[p.icon]}</span><span class="qt"><b>${p.t}</b><small>${p.sub}</small></span><span class="tick" aria-hidden="true">+</span></button>`).join("")}</div>`:""}
+    <form class="field" data-form="profile"><label for="other-profile">Your own goal</label>
+      <div class="inrow"><input class="input" id="other-profile" name="goal" maxlength="60" placeholder="e.g. Journal for five minutes" autocomplete="off"><button class="btn leaf" type="submit">Add</button></div></form>
+    <button class="btn ghost" data-act="close">Done</button>`);
+  sheetKind="goals";
+  if(focusInput){ const i=document.getElementById("other-profile"); if(i) i.focus({preventScroll:true}); }
+}
+function howSheet(){
+  sheet(`<h2>How Tamanna works</h2>
+    ${ladder(sim())}
+    <ol class="howto">
+      <li>Pick lifestyle goals a wearable can't measure. A day counts when every goal is done.</li>
+      <li>Each goal day earns a flower. Every flower earns its XP on each goal day after it is planted.</li>
+      <li>Five goal days in a row unlock the sunflower. Ten more unlock the red rose, and twenty more the pink lily.</li>
+      <li>A missed day dries every flower by ${DRY_PER_MISS}%. Three goal days bring them back, and you can't plant meanwhile. Flowers never die.</li>
+    </ol>
+    <button class="btn leaf" data-act="close">Got it</button>`);
+  sheetKind="how";
+}
+function demoSheet(){
+  sheet(`<h2>Demo time travel</h2><p class="muted">Skipping a day without finishing your goals counts as a miss.${S.offset?` The calendar is ${plural(S.offset,"day")} ahead.`:""}</p>
+    <div class="menu">
+      <button class="mrow" data-act="finish"><span class="mi">${checkSVG.replace('stroke="#fff"','stroke="currentColor"')}</span><span class="bt"><b>Finish today's goals</b><small>Check off every goal</small></span></button>
+      <button class="mrow" data-act="tomorrow"><span class="mi">${ICON.clock}</span><span class="bt"><b>Jump to tomorrow</b><small>Today counts as missed if unfinished</small></span></button>
+      <button class="mrow" data-act="ff5"><span class="mi">${sproutIcon()}</span><span class="bt"><b>Five goal days</b><small>Finish and plant for five days</small></span></button>
+    </div>
+    <button class="btn ghost" data-act="close">Close</button>`);
+  sheetKind="demo";
+}
+function accountsSheet(){
+  const others=Object.values(DB.users).filter(u=>u.id!==S.id);
+  sheet(`<h2>Gardeners on this device</h2><p class="muted">Gardens are saved in this browser.</p>
+    <div class="glist">
+      <div class="gline"><span class="av">${esc((S.name||"G")[0].toUpperCase())}</span><div class="bt"><b>${esc(S.name)}</b><small>Open now</small></div></div>
+      ${others.map(u=>`<div class="gline"><span class="av">${esc((u.name||"G")[0].toUpperCase())}</span><div class="bt"><b>${esc(u.name)}</b><small>${plural(u.goals.length,"goal")}</small></div><button class="btn small ghost" data-switch="${esc(u.id)}">Switch</button></div>`).join("")}
+    </div>
+    <div class="sheet-row"><button class="btn leaf" data-act="register">Add a gardener</button>${DB.users.sample?"":`<button class="btn ghost" data-act="sample">Open the sample</button>`}</div>
+    ${confirmDelete?`<div class="sheet-row"><button class="btn danger" data-act="del-yes">Delete ${esc(S.name)}'s garden</button><button class="btn ghost" data-act="del-no">Keep it</button></div>`:`<button class="btn ghost" data-act="del">Delete this garden</button>`}`);
+  sheetKind="accounts";
+}
 /* Registration: the home page for a new gardener */
 let reg={name:"", picks:["nosugar"], custom:[]};
 function registerView(){
@@ -650,8 +710,8 @@ function registerView(){
 const TABS=[
   ["today","Today",`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`],
   ["garden","Garden",sproutIcon()],
-  ["neighbours","Neighbours",`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="3.5" fill="currentColor"/><circle cx="17" cy="9" r="3" fill="currentColor" opacity=".7"/><path d="M1.5 20c.5-4 3.2-6 6.5-6s6 2 6.5 6z" fill="currentColor"/><path d="M14 20c.3-2.6 1.5-4.6 3.5-5 2.6 0 4.4 2 5 5z" fill="currentColor" opacity=".7"/></svg>`],
-  ["you","You",`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4.5" fill="currentColor"/><path d="M3.5 21c.6-4.6 4-7 8.5-7s7.9 2.4 8.5 7z" fill="currentColor"/></svg>`]
+  ["neighbours","Friends",`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="3.5" fill="currentColor"/><circle cx="17" cy="9" r="3" fill="currentColor" opacity=".7"/><path d="M1.5 20c.5-4 3.2-6 6.5-6s6 2 6.5 6z" fill="currentColor"/><path d="M14 20c.3-2.6 1.5-4.6 3.5-5 2.6 0 4.4 2 5 5z" fill="currentColor" opacity=".7"/></svg>`],
+  ["you","Me",`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4.5" fill="currentColor"/><path d="M3.5 21c.6-4.6 4-7 8.5-7s7.9 2.4 8.5 7z" fill="currentColor"/></svg>`]
 ];
 const appEl=document.getElementById("app"), tabsEl=document.getElementById("tabs");
 let registering=!S;
@@ -681,7 +741,7 @@ function petals(){
     s.style.animationDuration=(2.4+Math.random()*2)+"s"; s.style.animationDelay=(Math.random()*.6)+"s"; box.appendChild(s); }
   document.body.appendChild(box); setTimeout(()=>box.remove(),5200);
 }
-let lastFocus=null;
+let lastFocus=null, sheetKind=null;
 function sheet(html, center){
   closeSheet(true);
   lastFocus=document.activeElement;
@@ -692,7 +752,7 @@ function sheet(html, center){
   const f=b.querySelector("button:not(:disabled)"); if(f) f.focus({preventScroll:true});
   return b;
 }
-function closeSheet(silent){ const s=document.getElementById("sheet"); if(s){ s.remove(); if(!silent && lastFocus && document.contains(lastFocus)) lastFocus.focus({preventScroll:true}); } }
+function closeSheet(silent){ sheetKind=null; const s=document.getElementById("sheet"); if(s){ s.remove(); if(!silent && lastFocus && document.contains(lastFocus)) lastFocus.focus({preventScroll:true}); } }
 
 /* ---------- Actions ---------- */
 function persist(){ if(S) DB.users[S.id]=S; saveDB(); }
@@ -711,7 +771,7 @@ function rollback(){
 function toggleGoal(id){
   const k=T(), before=sim(), wasFull=!!S.full[k];
   const list=S.log[k]||(S.log[k]=[]);
-  if(list.includes(id)) list.splice(list.indexOf(id),1); else list.push(id);
+  if(list.includes(id)) list.splice(list.indexOf(id),1); else { list.push(id); justToggled=id; }
   refreshToday();
   const removed=rollback(); persist(); render();
   if(!wasFull && S.full[k]) dayComplete(before);
@@ -777,12 +837,14 @@ function addGoal(text, preset){
   if(preset){ const p=PRESETS.find(x=>x.id===preset); if(!p||S.goals.some(g=>g.id===p.id)) return; S.goals.push({id:p.id,t:p.t,icon:p.icon,from}); toast(`Added "${p.t}". It starts tomorrow.`); }
   else { const v=text.trim(); if(!v) return; S.goals.push({id:"c"+Date.now().toString(36),t:v,custom:true,from}); toast(`Added "${esc(v)}". It starts tomorrow.`); }
   persist(); render();
+  if(sheetKind==="goals") goalsSheet(!preset);
 }
 function removeGoal(id){
   if(S.goals.length<=1) return;
   const g=S.goals.find(x=>x.id===id); if(!g) return;
   const before=sim(), wasFull=!!S.full[T()];
   S.goals=S.goals.filter(x=>x.id!==id); refreshToday(); rollback(); persist(); render();
+  if(sheetKind==="goals") goalsSheet();
   toast(`Removed "${esc(g.t)}"`);
   if(!wasFull && S.full[T()]) dayComplete(before);
 }
@@ -831,7 +893,7 @@ document.addEventListener("submit",e=>{
   const f=e.target.closest("form"); if(!f) return; e.preventDefault();
   const v=(f.elements.goal&&f.elements.goal.value)||"";
   if(f.dataset.form==="reg-other"){ const t=v.trim(); if(t){ reg.custom.push(t); render(); const i=document.getElementById("other-reg"); if(i) i.focus(); } }
-  else if(f.dataset.form==="profile"){ addGoal(v); const i=document.getElementById("other-profile"); if(i) i.focus({preventScroll:true}); }
+  else if(f.dataset.form==="profile"){ addGoal(v); }
 });
 document.addEventListener("click",e=>{
   const t=e.target.closest("button"); if(!t||t.disabled) return;
@@ -853,15 +915,20 @@ document.addEventListener("click",e=>{
   else if(a==="go-today"){ closeSheet(true); go("today"); }
   else if(a==="other"){ addingOther=!addingOther; render(); if(addingOther){ const i=document.getElementById("other-reg"); if(i) i.focus(); } }
   else if(a==="create"){ createUser(); }
-  else if(a==="register"){ registering=true; addingOther=false; render(); window.scrollTo({top:0}); }
+  else if(a==="how"){ howSheet(); }
+  else if(a==="goals"){ goalsSheet(); }
+  else if(a==="demo"){ demoSheet(); }
+  else if(a==="accounts"){ confirmDelete=false; accountsSheet(); }
+  else if(a==="register"){ closeSheet(true); registering=true; addingOther=false; render(); window.scrollTo({top:0}); }
   else if(a==="cancel-reg"){ registering=false; render(); }
-  else if(a==="sample"){ const u=sampleUser(); DB.users[u.id]=u; switchTo(u.id); }
-  else if(a==="finish"){ if(!finishToday()) toast("Today's goals are already done."); }
-  else if(a==="tomorrow"){ advance(); }
-  else if(a==="ff5"){ fastForward(); }
-  else if(a==="del"){ confirmDelete=true; render(); }
-  else if(a==="del-no"){ confirmDelete=false; render(); }
+  else if(a==="sample"){ closeSheet(true); const u=sampleUser(); DB.users[u.id]=u; switchTo(u.id); }
+  else if(a==="finish"){ closeSheet(true); if(!finishToday()) toast("Today's goals are already done."); }
+  else if(a==="tomorrow"){ closeSheet(true); advance(); }
+  else if(a==="ff5"){ closeSheet(true); fastForward(); }
+  else if(a==="del"){ confirmDelete=true; accountsSheet(); }
+  else if(a==="del-no"){ confirmDelete=false; accountsSheet(); }
   else if(a==="del-yes"){
+    closeSheet(true);
     const name=S.name; delete DB.users[S.id]; confirmDelete=false;
     const next=Object.keys(DB.users)[0];
     if(next){ DB.current=next; S=DB.users[next]; persist(); go("today"); }
