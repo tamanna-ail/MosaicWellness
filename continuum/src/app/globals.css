@@ -28,7 +28,79 @@
   --ok-soft: #e8f5ee;
   --danger: #b4302b;
   --danger-soft: #fcecec;
-  --chart-band: #e9efe9;
+  --on-ink: #ffffff;
+  --on-accent: #ffffff;
+  --cat-consult: #3d5ce0;
+  --cat-diagnostic: #0f7a70;
+  --cat-medication: #7d43a8;
+  --cat-hospital: #b4302b;
+  --cat-procedure: #a65a0b;
+}
+
+/* Dark theme: follows the OS unless the viewer picked a theme explicitly. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1012;
+    --surface: #17181b;
+    --surface-2: #1c1d21;
+    --sunken: #232429;
+    --ink: #ecedef;
+    --ink-2: #b6b9c0;
+    --ink-3: #8a8f97;
+    --ink-4: #5b5f67;
+    --line: #2b2d32;
+    --line-2: #222429;
+    --accent: #8197ff;
+    --accent-ink: #a9b6ff;
+    --accent-soft: #1c2342;
+    --high: #f0a75e;
+    --high-soft: #31230f;
+    --low: #cb9ef2;
+    --low-soft: #2a1d37;
+    --ok: #5fca9c;
+    --ok-soft: #13291f;
+    --danger: #f2807a;
+    --danger-soft: #361a1a;
+    --on-ink: #121417;
+    --on-accent: #0f1012;
+    --cat-consult: #8197ff;
+    --cat-diagnostic: #4fc2b4;
+    --cat-medication: #c08ef0;
+    --cat-hospital: #f2807a;
+    --cat-procedure: #f0a75e;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1012;
+  --surface: #17181b;
+  --surface-2: #1c1d21;
+  --sunken: #232429;
+  --ink: #ecedef;
+  --ink-2: #b6b9c0;
+  --ink-3: #8a8f97;
+  --ink-4: #5b5f67;
+  --line: #2b2d32;
+  --line-2: #222429;
+  --accent: #8197ff;
+  --accent-ink: #a9b6ff;
+  --accent-soft: #1c2342;
+  --high: #f0a75e;
+  --high-soft: #31230f;
+  --low: #cb9ef2;
+  --low-soft: #2a1d37;
+  --ok: #5fca9c;
+  --ok-soft: #13291f;
+  --danger: #f2807a;
+  --danger-soft: #361a1a;
+  --on-ink: #121417;
+  --on-accent: #0f1012;
+  --cat-consult: #8197ff;
+  --cat-diagnostic: #4fc2b4;
+  --cat-medication: #c08ef0;
+  --cat-hospital: #f2807a;
+  --cat-procedure: #f0a75e;
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -53,6 +125,8 @@
   --color-ok-soft: var(--ok-soft);
   --color-danger: var(--danger);
   --color-danger-soft: var(--danger-soft);
+  --color-on-ink: var(--on-ink);
+  --color-on-accent: var(--on-accent);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-serif: var(--font-serif-display);

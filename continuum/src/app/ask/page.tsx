@@ -58,9 +58,12 @@ function Ask() {
     const draft = answerQuestion(snap, q);
     await sleep(450);
     update({ step: 1 });
-    const remote = fetch("/api/ask", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ question: q, draft, digest: buildDigest(snap) }) })
-      .then((r) => r.json())
-      .catch(() => ({ engine: "local" }));
+    const remote =
+      process.env.NEXT_PUBLIC_HOST === "artifact"
+        ? Promise.resolve({ engine: "local" })
+        : fetch("/api/ask", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ question: q, draft, digest: buildDigest(snap) }) })
+            .then((r) => r.json())
+            .catch(() => ({ engine: "local" }));
     await sleep(550);
     update({ step: 2 });
     await sleep(500);
@@ -96,7 +99,7 @@ function Ask() {
     <div className="mx-auto flex min-h-[calc(100vh-8rem)] max-w-[820px] flex-col">
       {empty ? (
         <div className="flex flex-1 flex-col justify-center pb-10 pt-6 animate-fade-up">
-          <div className="mb-6 flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br from-accent to-[#6f86f0] text-white shadow-[0_8px_24px_-8px_rgba(61,92,224,0.6)]">
+          <div className="mb-6 flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br from-accent to-accent-ink text-on-accent shadow-[0_8px_24px_-8px_rgba(61,92,224,0.6)]">
             <Sparkles className="size-6" />
           </div>
           <h1 className="font-serif text-[42px] leading-[1.05] text-ink sm:text-[52px]">Ask your health history</h1>
@@ -131,12 +134,12 @@ function Ask() {
           {turns.map((t) => (
             <div key={t.id} className="space-y-5">
               <div className="flex justify-end animate-fade-up">
-                <div className="max-w-[85%] rounded-2xl rounded-br-md bg-ink px-4 py-2.5 text-[15px] text-white">{t.question}</div>
+                <div className="max-w-[85%] rounded-2xl rounded-br-md bg-ink px-4 py-2.5 text-[15px] text-on-ink">{t.question}</div>
               </div>
               {t.answer ? (
                 <div className="animate-fade-up">
                   <div className="mb-3 flex items-center gap-2 text-[12px] text-ink-3">
-                    <span className="flex size-6 items-center justify-center rounded-lg bg-accent text-white">
+                    <span className="flex size-6 items-center justify-center rounded-lg bg-accent text-on-accent">
                       <Sparkles className="size-3.5" />
                     </span>
                     Answered from your records · {t.answer.sources.length} source{t.answer.sources.length === 1 ? "" : "s"}
@@ -190,7 +193,7 @@ function Ask() {
             className="max-h-40 flex-1 resize-none bg-transparent py-2 text-[15px] text-ink outline-none placeholder:text-ink-3"
             aria-label="Ask a question"
           />
-          <button type="submit" disabled={busy || !input.trim()} className="flex size-9 items-center justify-center rounded-xl bg-ink text-white transition-opacity disabled:opacity-25" aria-label="Send">
+          <button type="submit" disabled={busy || !input.trim()} className="flex size-9 items-center justify-center rounded-xl bg-ink text-on-ink transition-opacity disabled:opacity-25" aria-label="Send">
             <ArrowUp className="size-4" />
           </button>
         </form>

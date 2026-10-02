@@ -103,6 +103,8 @@ Other scripts: `npm run build`, `npm run lint`, `npm run typecheck`, `npm run as
 
 To build the static version locally: `rm -rf src/app/api && STATIC_EXPORT=true BASE_PATH=/MosaicWellness npm run build` (then restore `src/app/api` with git).
 
+**Single page:** `npm run build:artifact` bundles the whole app into one self-contained HTML file (`artifact/continuum.html`) with an in-memory router. It runs on the on-device engines and uses invented clinic and lab names in its demo data.
+
 **Vercel (full version):** import the repository, set **Root Directory** to `continuum`, and deploy. Add `ANTHROPIC_API_KEY` for real document extraction and AI-written answers, and `DATABASE_URL` (set at build time) for Postgres.
 
 ## Stack

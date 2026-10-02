@@ -23,6 +23,8 @@ export interface UploadJob {
 
 const Ctx = React.createContext<{ jobs: UploadJob[]; upload: (files: File[]) => void; dismiss: (id: string) => void } | null>(null);
 
+class RejectedFile extends Error {}
+
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const ACCEPTED = ["application/pdf", "image/png", "image/jpeg", "image/jpg", "image/webp"];
 
@@ -45,7 +47,7 @@ export function UploadProvider({ children }: { children: React.ReactNode }) {
 
   const setStage = (id: string, stage: number, error?: string) => setJobs((js) => js.map((j) => (j.id === id ? { ...j, stage, error } : j)));
 
-  const process = React.useCallback(async (file: File) => {
+  const run = React.useCallback(async (file: File) => {
     const id = `up_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 7)}`;
     const uploadedAt = new Date().toISOString();
     setJobs((js) => [{ id, name: file.name, size: file.size, stage: 0 }, ...js]);
@@ -77,14 +79,15 @@ export function UploadProvider({ children }: { children: React.ReactNode }) {
     setStage(id, 1);
     const body = new FormData();
     body.append("file", file);
-    const request = fetch("/api/extract", { method: "POST", body })
+    // A static single-page build has no processing service; extract on-device straight away.
+    const request = process.env.NEXT_PUBLIC_HOST === "artifact" ? Promise.resolve(demoExtract(file.name, file.type)) : fetch("/api/extract", { method: "POST", body })
       .then(async (r) => {
-        if (r.status === 413 || r.status === 400) throw new Error((await r.json().catch(() => null))?.error ?? "This file couldn't be processed");
-        if (!r.ok) throw new TypeError("service unavailable");
+        if (r.status === 413 || r.status === 400) throw new RejectedFile((await r.json().catch(() => null))?.error ?? "This file couldn't be processed");
+        if (!r.ok) throw new Error("service unavailable");
         return (await r.json()) as ExtractionResult;
       })
-      // If the processing service is unreachable, fall back to the on-device demo extractor rather than failing.
-      .catch((e) => (e instanceof TypeError ? demoExtract(file.name, file.type) : Promise.reject(e)));
+      // If the processing service is unreachable (e.g. a static host), use the on-device demo extractor rather than failing.
+      .catch((e) => (e instanceof RejectedFile ? Promise.reject(e) : demoExtract(file.name, file.type)));
     await sleep(900);
     setStage(id, 2);
     let result: ExtractionResult;
@@ -106,10 +109,10 @@ export function UploadProvider({ children }: { children: React.ReactNode }) {
   const value = React.useMemo(
     () => ({
       jobs,
-      upload: (files: File[]) => files.forEach((f, i) => setTimeout(() => void process(f), i * 250)),
+      upload: (files: File[]) => files.forEach((f, i) => setTimeout(() => void run(f), i * 250)),
       dismiss: (id: string) => setJobs((js) => js.filter((j) => j.id !== id)),
     }),
-    [jobs, process],
+    [jobs, run],
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

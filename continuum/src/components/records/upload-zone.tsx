@@ -29,7 +29,7 @@ export function UploadZone({ inputRef }: { inputRef: React.RefObject<HTMLInputEl
         over ? "border-accent bg-accent-soft/60 scale-[1.005]" : "border-ink-4/70 bg-surface/60 hover:border-ink-3 hover:bg-surface",
       )}
     >
-      <div className={cn("flex size-11 items-center justify-center rounded-xl transition-colors", over ? "bg-accent text-white" : "bg-sunken text-ink-2")}>
+      <div className={cn("flex size-11 items-center justify-center rounded-xl transition-colors", over ? "bg-accent text-on-accent" : "bg-sunken text-ink-2")}>
         <CloudUpload className="size-5" strokeWidth={1.75} />
       </div>
       <div className="mt-4 text-[15px] font-medium text-ink">Drop your medical records here</div>

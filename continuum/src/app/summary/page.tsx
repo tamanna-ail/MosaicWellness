@@ -112,13 +112,15 @@ function Summary() {
         </Button>
         <div className="flex items-center gap-2">
           <span className="text-[12.5px] text-ink-3">{RANGE_LABEL[range] ?? "Entire history"}</span>
-          <Button variant="primary" size="sm" onClick={() => window.print()}>
-            <Printer /> Print / Save PDF
-          </Button>
+          {process.env.NEXT_PUBLIC_HOST !== "artifact" && (
+            <Button variant="primary" size="sm" onClick={() => window.print()}>
+              <Printer /> Print / Save PDF
+            </Button>
+          )}
         </div>
       </div>
 
-      <article className="rounded-2xl border border-line bg-white px-6 py-8 shadow-card print:border-0 print:p-0 print:shadow-none sm:px-12 sm:py-12">
+      <article className="rounded-2xl border border-line bg-surface px-6 py-8 shadow-card print:border-0 print:p-0 print:shadow-none sm:px-12 sm:py-12">
         <header className="flex items-start justify-between gap-6 border-b-2 border-ink pb-6">
           <div>
             <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-3">Patient medical summary</div>

@@ -8,9 +8,11 @@ import { ageFrom, fmtDate } from "@/lib/health/selectors";
 
 export default function SettingsPage() {
   const { snapshot: s, resetDemo } = useHealth();
-  const [status, setStatus] = React.useState<{ llm: boolean; model: string | null; database: boolean } | null>(null);
+  // The single-page build has no server to ask, so its status is known up front.
+  const [status, setStatus] = React.useState<{ llm: boolean; model: string | null; database: boolean } | null>(() => (process.env.NEXT_PUBLIC_HOST === "artifact" ? { llm: false, model: null, database: false } : null));
   const [confirm, setConfirm] = React.useState(false);
   React.useEffect(() => {
+    if (process.env.NEXT_PUBLIC_HOST === "artifact") return;
     fetch("/api/status")
       .then((r) => r.json())
       .then(setStatus)
@@ -81,9 +83,11 @@ export default function SettingsPage() {
               <ShieldCheck className="mt-0.5 size-4 shrink-0 text-ok" /> {s.documents.length} records · {uploads} uploaded by you · {edits} with your corrections. Nothing is shared without your action.
             </p>
             <div className="flex flex-wrap gap-2">
-              <Button onClick={exportJson}>
-                <Download /> Export all data (JSON)
-              </Button>
+              {process.env.NEXT_PUBLIC_HOST !== "artifact" && (
+                <Button onClick={exportJson}>
+                  <Download /> Export all data (JSON)
+                </Button>
+              )}
               {!confirm ? (
                 <Button variant="ghost" onClick={() => setConfirm(true)}>
                   <RotateCcw /> Reset demo data

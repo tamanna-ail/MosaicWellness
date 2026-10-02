@@ -83,7 +83,7 @@ export default function HomePage() {
         )}
       </section>
 
-      <div className="grid gap-6 lg:grid-cols-[1.35fr_1fr]">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
         {/* Recent activity */}
         <Card className="animate-fade-up [animation-delay:140ms]">
           <CardHeader
@@ -147,8 +147,8 @@ export default function HomePage() {
             </ul>
           </Card>
 
-          <Link href="/ask" className="group flex items-center gap-4 rounded-2xl border border-line bg-gradient-to-br from-[#f3f5fe] to-surface p-5 shadow-card transition-shadow hover:shadow-pop animate-fade-up [animation-delay:220ms]">
-            <div className="flex size-10 items-center justify-center rounded-xl bg-accent text-white">
+          <Link href="/ask" className="group flex items-center gap-4 rounded-2xl border border-line bg-gradient-to-br from-accent-soft to-surface p-5 shadow-card transition-shadow hover:shadow-pop animate-fade-up [animation-delay:220ms]">
+            <div className="flex size-10 items-center justify-center rounded-xl bg-accent text-on-accent">
               <Sparkles className="size-5" />
             </div>
             <div className="min-w-0 flex-1">

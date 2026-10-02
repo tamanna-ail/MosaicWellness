@@ -24,11 +24,11 @@ const FILTERS: { value: Filter; label: string }[] = [
 ];
 
 const CATEGORY_STYLE: Record<TimelineCategory, { dot: string; text: string }> = {
-  consultation: { dot: "bg-[#3d5ce0]", text: "text-[#3d5ce0]" },
-  diagnostic: { dot: "bg-[#0f8a7e]", text: "text-[#0f7a70]" },
-  medication: { dot: "bg-[#8a4bb8]", text: "text-[#7d43a8]" },
-  hospitalization: { dot: "bg-[#b4302b]", text: "text-[#b4302b]" },
-  procedure: { dot: "bg-[#a65a0b]", text: "text-[#a65a0b]" },
+  consultation: { dot: "bg-[var(--cat-consult)]", text: "text-[var(--cat-consult)]" },
+  diagnostic: { dot: "bg-[var(--cat-diagnostic)]", text: "text-[var(--cat-diagnostic)]" },
+  medication: { dot: "bg-[var(--cat-medication)]", text: "text-[var(--cat-medication)]" },
+  hospitalization: { dot: "bg-[var(--cat-hospital)]", text: "text-[var(--cat-hospital)]" },
+  procedure: { dot: "bg-[var(--cat-procedure)]", text: "text-[var(--cat-procedure)]" },
 };
 
 const VIEW_LABEL: Record<TimelineCategory, string> = {

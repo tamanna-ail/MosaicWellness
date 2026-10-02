@@ -72,7 +72,7 @@ function SidebarContents({ onNavigate, dataSource }: { onNavigate?: () => void; 
           onClick={onNavigate}
           className={cn("flex items-center gap-3 rounded-xl px-2 py-2 transition-colors hover:bg-sunken/70", isActive(pathname, "/settings") && "bg-surface shadow-card ring-1 ring-line")}
         >
-          <div className="flex size-8 items-center justify-center rounded-full bg-gradient-to-br from-[#dfe6fb] to-[#f3e9dc] text-[12px] font-semibold text-ink-2">
+          <div className="flex size-8 items-center justify-center rounded-full bg-gradient-to-br from-accent-soft to-high-soft text-[12px] font-semibold text-ink-2">
             {patient.firstName[0]}
             {patient.lastName[0]}
           </div>
@@ -100,7 +100,7 @@ export function AppShell({ children, dataSource }: { children: React.ReactNode; 
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <div className="no-print sticky top-0 z-30 flex h-14 items-center gap-3 border-b border-line-2 bg-bg/85 px-4 backdrop-blur lg:hidden">
+        <div className="no-print sticky top-[env(safe-area-inset-top,0px)] z-30 flex h-14 items-center gap-3 border-b border-line-2 bg-bg/85 px-4 backdrop-blur lg:hidden">
           <button onClick={() => setOpen(true)} className="-ml-1 rounded-lg p-2 text-ink-2 hover:bg-sunken" aria-label="Open navigation">
             <Menu className="size-5" />
           </button>

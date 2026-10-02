@@ -15,7 +15,7 @@ function SourceChips({ ids, index, onOpen }: { ids?: string[]; index: Map<string
   return (
     <span className="ml-1 inline-flex flex-wrap gap-0.5 align-baseline">
       {nums.map(([id, n]) => (
-        <button key={id} onClick={() => onOpen(id)} className="inline-flex h-[18px] min-w-[18px] items-center justify-center rounded-[5px] bg-sunken px-1 text-[10.5px] font-semibold tabular text-ink-2 transition-colors hover:bg-accent hover:text-white" title="Open source record">
+        <button key={id} onClick={() => onOpen(id)} className="inline-flex h-[18px] min-w-[18px] items-center justify-center rounded-[5px] bg-sunken px-1 text-[10.5px] font-semibold tabular text-ink-2 transition-colors hover:bg-accent hover:text-on-accent" title="Open source record">
           {n}
         </button>
       ))}
@@ -119,7 +119,7 @@ export function AnswerView({ answer, onOpen, onFollowUp }: { answer: AiAnswer; o
           <div className="grid gap-1.5 sm:grid-cols-2">
             {answer.sources.map((c, i) => (
               <button key={c.documentId} onClick={() => onOpen(c.documentId)} className="group flex items-center gap-3 rounded-xl border border-line bg-surface px-3 py-2 text-left transition-all hover:border-ink-4 hover:shadow-card">
-                <span className="flex size-5 shrink-0 items-center justify-center rounded-[5px] bg-sunken text-[10.5px] font-semibold tabular text-ink-2 group-hover:bg-accent group-hover:text-white">{i + 1}</span>
+                <span className="flex size-5 shrink-0 items-center justify-center rounded-[5px] bg-sunken text-[10.5px] font-semibold tabular text-ink-2 group-hover:bg-accent group-hover:text-on-accent">{i + 1}</span>
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-[13px] font-medium text-ink">
                     {c.title} — {fmtDate(c.date)}
